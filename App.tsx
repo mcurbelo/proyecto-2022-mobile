@@ -28,6 +28,8 @@ export default function App() {
         {/* Por ahora queda asi */}
         <Tab.Screen name="misCompras" component={MisCompras}/>
       </Tab.Navigator>
+      <Tab.Screen name="registrarse" component={Registrar}/>
+
       
     </NavigationContainer>
 
