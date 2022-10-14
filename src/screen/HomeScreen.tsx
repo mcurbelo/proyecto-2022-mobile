@@ -12,18 +12,15 @@ const HomeScreen = () => {
   useLayoutEffect(
     () =>
       navi.setOptions({
-        // headerTitle: "a"
         headerShown: false,
       }),
     []
   );
 
   return (
-    // SafeAreaView creo que deberia permitir que los cell digan que tanto bajar la header por ejemplo (no creo que ufnque en el que tengo yo)
     <SafeAreaView>
       <AppBar
-      title="Title"
-
+        title="Title"
         leading={(props) => (
           <IconButton
             icon={(props) => <Icon name="menu-down" {...props} />}
