@@ -3,19 +3,21 @@ import React, {useLayoutEffect} from 'react'
 
 import {useNavigation} from '@react-navigation/native'
 import { Stack, Button } from "@react-native-material/core";
- import { NavigationContainer } from '@react-navigation/native';
 import { MaterialBottomTabNavigationProp, MaterialBottomTabScreenProps } from '@react-navigation/material-bottom-tabs';
-import { TabNavigatorParamList } from '../../App';
+import { TabNavigatorParamList } from '../navigator/Navigator';
+
+import Registrar from './RegistrarScreen';
 
 
-type MisComprasProps = MaterialBottomTabScreenProps<TabNavigatorParamList, "MisCompras">
-const MisCompras = ({route, navigation}: MisComprasProps) => {
+type MisComprasProps = MaterialBottomTabScreenProps<TabNavigatorParamList, "MisComprasScreen">
+const MisComprasScreen = ({route, navigation}: MisComprasProps) => {
 
   return (
 
     <Stack fill center spacing={4}>     
       <Button title="REGISTRE-SE"
-      onPress={() => navigation.navigate('Registrar')}
+      // TODO: Esto es un parche haceme acordar que te pregunte porque esto no sería un tab
+      onPress={() => navigation.navigate(Registrar)}
 
        />
 
@@ -24,4 +26,4 @@ const MisCompras = ({route, navigation}: MisComprasProps) => {
       )
 }
 
-export default MisCompras
+export default MisComprasScreen
