@@ -5,7 +5,6 @@ import React, { Component, useLayoutEffect } from "react";
 import HomeScreen from "../screen/HomeScreen";
 import IniciarSesionScreen from "../screen/IniciarSesionScreen";
 import MisComprasScreen from "../screen/MisComprasScreen";
-import MisCompras from "../screen/MisComprasScreen";
 import RegistrarScreen from "../screen/RegistrarScreen";
 
 const Stack = createNativeStackNavigator();
@@ -13,18 +12,18 @@ const Stack = createNativeStackNavigator();
 export type TabNavigatorParamList = {
   HomeScreen: undefined;
   MisComprasScreen: undefined;
-  Registrarse: undefined
+  RegistrarScreen: undefined
 };
 
 const Tab = createMaterialBottomTabNavigator<TabNavigatorParamList>();
 
 function HomeTabs() {
- 
-  return (
+    return (
     <Tab.Navigator>
       <Tab.Screen name="HomeScreen" component={HomeScreen} />
-      {/* Aca supongo que iría el "Esta logueado YYY " */}
-      {true && <Tab.Screen name="MisComprasScreen" component={MisComprasScreen} />}
+      <Tab.Screen name="RegistrarScreen" component={RegistrarScreen}  />
+
+      <Tab.Screen name="MisComprasScreen" component={MisComprasScreen} />
     </Tab.Navigator>
   );
 }
@@ -34,8 +33,8 @@ export class Navigator extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="HomeTabs" component={HomeTabs} />
-          <Stack.Screen name="Registrar" component={RegistrarScreen} />
+          <Stack.Screen name="HomeTabs" component={HomeTabs} options={{headerShown:false}} />
+          <Stack.Screen name="RegistrarScreen" component={RegistrarScreen} />
           <Stack.Screen name="IniciarSesion" component={IniciarSesionScreen} />
         </Stack.Navigator>
       </NavigationContainer>

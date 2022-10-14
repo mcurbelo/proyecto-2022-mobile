@@ -19,6 +19,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
+      
       <AppBar
         title="Title"
         leading={(props) => (
