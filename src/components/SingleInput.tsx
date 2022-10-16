@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, TextInput } from "react-native";
 import React, { FC } from "react";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
 interface Props {
   placeholder: string;
   onChangeText?: (text: string) => void;
@@ -10,13 +10,15 @@ interface Props {
   // TODO: por ahora? para que el Kbtype no me de error Por ahora se que es overkill...
   kbType?: "default" | "numeric" | "email-address";
   textCType?: "emailAddress" | "familyName";
-  label: string
+  label: string;
+  isDate?: boolean;
 }
 
 const SingleInput: FC<Props> = (props) => {
   // const {type }= this.props
   return (
     // auto-autoComplete="emailAddress" keyboardType="email-address" textContentType="emailAddress"
+    // !props.isDate?
     <View style={styles.root}>
       <Text style={styles.text}>{props.label}</Text>
       <TextInput
@@ -26,10 +28,14 @@ const SingleInput: FC<Props> = (props) => {
         textContentType={props.textCType}
         style={styles.input}
         textAlign="center"
-        
-        
       />
-
+      {/* : */}
+      <DateTimePicker
+        value={new Date()}
+        display="default"
+        maximumDate={new Date(2300, 10, 20)}
+        minimumDate={new Date(1990, 1, 1)}
+      />
     </View>
   );
 };
@@ -49,14 +55,12 @@ const styles = StyleSheet.create({
 
     borderRadius: 100,
 
-    fontSize: 23
+    fontSize: 23,
   },
   text: {
     fontSize: 23,
     alignItems: "center",
-    padding: 10
-
-  }
-
+    padding: 10,
+  },
 });
 export default SingleInput;

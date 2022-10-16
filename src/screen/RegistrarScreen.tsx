@@ -8,6 +8,7 @@ import {
 import React from "react";
 import SingleInput from "../components/SingleInput";
 
+
 const RegistrarScreen = () => {
   const { height, width } = useWindowDimensions();
 
@@ -25,12 +26,13 @@ const RegistrarScreen = () => {
       />
       <SingleInput placeholder="NOMBRE" label="Ingrese su nombre:" />
       <SingleInput placeholder="Apellido" label="Ingrese su apellido:" />
-      <SingleInput
-        placeholder="DD/MM/YYYY"
-        label="Ingrese su fecha de nacimiento(OPCIONAL)"
-        autoComplete="birthdate-full"
+      
+      <SingleInput 
+      placeholder="aa"
+      label="aaa"
       />
 
+      
     </SafeAreaView>
   );
 };
