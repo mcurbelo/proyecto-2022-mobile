@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import { View, Text } from 'react-native'
+import React from 'react'
 
-export class IniciarSesionScreen extends Component {
-  render() {
-    return (
-      <div>IniciarSesionScreen</div>
-    )
-  }
+const IniciarSesionScreen = () => {
+  return (
+    <View>
+      <Text></Text>
+    </View>
+  )
 }
 
 export default IniciarSesionScreen

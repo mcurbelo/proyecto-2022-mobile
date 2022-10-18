@@ -1,40 +1,38 @@
 import { StyleSheet, View, Text, TextInput } from "react-native";
-import React, { FC } from "react";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import React, { FC, Dispatch, SetStateAction } from "react";
+
 interface Props {
   placeholder: string;
-  onChangeText?: (text: string) => void;
-  securityTextEntry?: boolean;
+  secureTextEntry?: boolean;
+  value: string;
+  setValue: (text: string) => void;
 
-  autoComplete?: string;
-  // TODO: por ahora? para que el Kbtype no me de error Por ahora se que es overkill...
-  kbType?: "default" | "numeric" | "email-address";
-  textCType?: "emailAddress" | "familyName";
-  label: string;
-  isDate?: boolean;
+  // onChange?: (val: string) => void;
+
+  // TODO: Estos son cosas del TextInput pero son como que muy poco importantes por ahora a mi parecer
+  // autoComplete?: string;
+  // kbType?: "default" | "numeric" | "email-address";
+  // textCType?: "emailAddress" | "familyName";
+  // label: string;
 }
 
 const SingleInput: FC<Props> = (props) => {
   // const {type }= this.props
+
   return (
-    // auto-autoComplete="emailAddress" keyboardType="email-address" textContentType="emailAddress"
-    // !props.isDate?
     <View style={styles.root}>
-      <Text style={styles.text}>{props.label}</Text>
       <TextInput
-        auto-autoComplete={props.autoComplete}
-        keyboardType={props.kbType}
+        // TODO: Estos son cosas del TextInput pero son como que muy poco importantes por ahora a mi parecer
+        // auto-autoComplete={props.autoComplete}
+        // keyboardType={props.kbType}
+        // textContentType={props.textCType}
+
         placeholder={props.placeholder}
-        textContentType={props.textCType}
         style={styles.input}
         textAlign="center"
-      />
-      {/* : */}
-      <DateTimePicker
-        value={new Date()}
-        display="default"
-        maximumDate={new Date(2300, 10, 20)}
-        minimumDate={new Date(1990, 1, 1)}
+        secureTextEntry={props.secureTextEntry}
+        value={props.value}
+        onChangeText={props.setValue}
       />
     </View>
   );
@@ -50,15 +48,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderStyle: "solid",
     borderWidth: 1,
-
     backgroundColor: "white",
-
-    borderRadius: 100,
-
-    fontSize: 23,
+    borderRadius: 25,
+    fontSize: 20,
+    marginTop: 20,
+    marginBottom: 20,
   },
   text: {
-    fontSize: 23,
+    fontSize: 20,
     alignItems: "center",
     padding: 10,
   },
