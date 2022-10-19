@@ -23,7 +23,7 @@ const PasswdValidation: FC<Props> = (props) => {
   const val = () => {
       // TODO: No encontre que otra cosa usamos pero aca supongo que lo ponemos ya sea si necesitamos que la pass tenga mayusculas y bla~~
 
-      // TODO:2 Aca me salta que no puedo actualizar un componente (RegistrarScreen) cuando estoy renderizando este. Pero como lo hago entonces?
+      // TODO:2 Aca me salta que no puedo actualizar un componente (RegistrarScreen) cuando estoy renderizando este. Pero como lo hago entonces? 
     if (props.pass === props.rePass) props.setValidacion(true);
     else props.setValidacion(false);
   };
