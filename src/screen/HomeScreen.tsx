@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      <BarraSuperior nombre="Home" wasPressed={wasPressed} pressed={pressed}/>
+      <BarraSuperior nombre="Home" wasPressed={wasPressed} pressed={pressed} tieneSearchBar={true}/>
 
      {pressed && <SearchBar text={search} setText={setSearch} />}
     </SafeAreaView>

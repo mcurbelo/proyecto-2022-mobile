@@ -8,6 +8,7 @@ import SearchBar from "./SearchBar";
 
 interface Props {
   nombre: string;
+  tieneSearchBar?: boolean | undefined
   pressed: boolean
   wasPressed: (was:boolean)=>void
 }
@@ -22,8 +23,9 @@ const BarraSuperior: FC<Props> = (props) => {
       <Appbar.Content title={props.nombre}/>
       {/*TODO: Aca la idea es que aparesca la barrita porque no funciona? */}
       {/* Le puse el () para que se deje de joder */}
-      <Appbar.Action icon="magnify" onPress={()=>{props.wasPressed(!props.pressed)
-      props.pressed= !props.pressed}} />
+
+      {props.tieneSearchBar &&<Appbar.Action icon="magnify" onPress={()=>{props.wasPressed(!props.pressed)
+      props.pressed= !props.pressed}} />}
     </Appbar.Header>
     // <View>
     //   <AppBar

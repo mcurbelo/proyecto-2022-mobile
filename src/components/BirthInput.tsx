@@ -2,6 +2,8 @@ import { View, StyleSheet, Platform } from "react-native";
 import React, { FC, useState } from "react";
 import { Button, Text } from "@react-native-material/core";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { TextInput } from "react-native-paper";
+import SingleInput from "./SingleInput";
 const BirthInput = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -40,7 +42,8 @@ const BirthInput = () => {
 
   return (
     <View style={styles.root}>
-      <Text variant="h4">{text}</Text>
+      <TextInput  value={text} disabled={false}/>
+      {/* <Text variant="h4">{text}</Text> */}
       <Button
         variant="outlined"
         title="SELECCIONAR FECHA"

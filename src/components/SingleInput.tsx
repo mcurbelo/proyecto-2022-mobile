@@ -7,6 +7,9 @@ interface Props {
   secureTextEntry?: boolean;
   value: string;
   setValue: (text: string) => void;
+  disabled?: boolean | undefined
+
+  
 
   // onChange?: (val: string) => void;
 
@@ -27,7 +30,8 @@ const SingleInput: FC<Props> = (props) => {
         // auto-autoComplete={props.autoComplete}
         // keyboardType={props.kbType}
         // textContentType={props.textCType}
-
+        disabled={props.disabled}
+        mode="outlined"
         placeholder={props.placeholder}
         style={styles.input}
         textAlign="center"

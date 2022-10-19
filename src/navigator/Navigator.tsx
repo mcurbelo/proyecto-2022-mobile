@@ -39,12 +39,13 @@ export class Navigator extends Component {
       // TODO: pense que styles genericos podria pegarlos
       // <SafeAreaView style={styles.root}>
 
-      <NavigationContainer>
-        <Stack.Navigator>
+      <NavigationContainer >
+        <Stack.Navigator > 
             <Stack.Screen
               name="HomeTabs"
               component={HomeTabs}
               options={{ headerShown: false }}
+
             />
             <Stack.Screen name="RegistrarScreen" component={RegistrarScreen} />
             <Stack.Screen
