@@ -36,7 +36,7 @@ const RegistrarScreen = () => {
   // const [rePass, setRepass] = useState("");
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <BarraSuperior nombre="Registrar" />
 
       <ScrollView contentContainerStyle={styles.root}>
@@ -81,31 +81,26 @@ const RegistrarScreen = () => {
         />
         <BirthInput />
 
-
-
         <Button title="Iniciar Sesion" style={styles.btn} />
-
       </ScrollView>
     </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
   root: {
-    display:'flex',
-    alignItems: "center",
-    justifyContent: "space-around",
-    height: '100%',
-    padding: 50,
+    // display: "flex",
+    // alignItems: "center",
+    // justifyContent: "space-around",
+    // height: "100%",
+    // padding: 50,
   },
   warning: {
-    color: "red",
-    alignItems: "center",
+    // color: "red",
+    // alignItems: "center",
   },
-  btn:{
-    width: '90%',
- 
-
-  }
+  btn: {
+    // width: "90%",
+  },
 });
 
 export default RegistrarScreen;

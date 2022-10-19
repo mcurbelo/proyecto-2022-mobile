@@ -1,5 +1,6 @@
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import React, { FC, Dispatch, SetStateAction } from "react";
+import {TextInput} from 'react-native-paper'
 
 interface Props {
   placeholder: string;
@@ -40,24 +41,24 @@ const SingleInput: FC<Props> = (props) => {
 
 const styles = StyleSheet.create({
   root: {
-    alignItems: "center",
+    // alignItems: "center",
   },
   input: {
-    // TODO: Aca quisiera poner tipo screenwidth* 0.8 para estar masomenos igual en todos los lados o algo asi no se.. pero no encontre como meterle una variable aca el metodo style={styles.input(aca una var)} no sirvio
-    width: 300,
-    padding: 10,
-    borderStyle: "solid",
-    borderWidth: 1,
-    backgroundColor: "white",
-    borderRadius: 25,
-    fontSize: 20,
-    marginTop: 20,
-    marginBottom: 20,
+  //   // TODO: Aca quisiera poner tipo screenwidth* 0.8 para estar masomenos igual en todos los lados o algo asi no se.. pero no encontre como meterle una variable aca el metodo style={styles.input(aca una var)} no sirvio
+  //   width: 300,
+  //   padding: 10,
+  //   borderStyle: "solid",
+  //   borderWidth: 1,
+  //   backgroundColor: "white",
+  //   borderRadius: 25,
+  //   fontSize: 20,
+  //   marginTop: 20,
+  //   marginBottom: 20,
   },
   text: {
-    fontSize: 20,
-    alignItems: "center",
-    padding: 10,
+    // fontSize: 20,
+    // alignItems: "center",
+    // padding: 10,
   },
 });
 export default SingleInput;

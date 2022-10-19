@@ -61,7 +61,7 @@ export class Navigator extends Component {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: "grey",
+    // backgroundColor: "grey",
   },
 });
 

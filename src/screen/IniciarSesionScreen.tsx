@@ -32,12 +32,13 @@ const IniciarSesionScreen = () => {
 };
 const styles = StyleSheet.create({
   root: {
-    display: "flex",
-    // flexWrap:'wrap',
-    alignContent: "center",
-    justifyContent: "space-around",
-    height: "40%",
-  },
+  //   display: "flex",
+  //   // flexWrap:'wrap',
+  //   alignContent: "center",
+  //   justifyContent: "space-around",
+  //   height: "40%",
+  // 
+  }
 });
 
 export default IniciarSesionScreen;
