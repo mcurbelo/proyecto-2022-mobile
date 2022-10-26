@@ -32,8 +32,8 @@ const SingleInput: FC<Props> = (props) => {
         // textContentType={props.textCType}
         disabled={props.disabled}
         mode="outlined"
+        
         placeholder={props.placeholder}
-        style={styles.input}
         textAlign="center"
         secureTextEntry={props.secureTextEntry}
         value={props.value}
@@ -46,6 +46,8 @@ const SingleInput: FC<Props> = (props) => {
 const styles = StyleSheet.create({
   root: {
     // alignItems: "center",
+    paddingTop:10,
+    paddingBottom: 10
   },
   input: {
   //   // TODO: Aca quisiera poner tipo screenwidth* 0.8 para estar masomenos igual en todos los lados o algo asi no se.. pero no encontre como meterle una variable aca el metodo style={styles.input(aca una var)} no sirvio
@@ -56,8 +58,8 @@ const styles = StyleSheet.create({
   //   backgroundColor: "white",
   //   borderRadius: 25,
   //   fontSize: 20,
-  //   marginTop: 20,
-  //   marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 10,
   },
   text: {
     // fontSize: 20,

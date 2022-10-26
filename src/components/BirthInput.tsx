@@ -18,7 +18,7 @@ const BirthInput = () => {
     today.getFullYear() - 18
   );
 
-  new Date()
+  new Date();
   interface OnCh {
     event: Event;
     selectedDate: Date;
@@ -42,9 +42,10 @@ const BirthInput = () => {
 
   return (
     <View style={styles.root}>
-      <TextInput  value={text} disabled={false}/>
+      <TextInput value={text} disabled={false} style={styles.text} />
       {/* <Text variant="h4">{text}</Text> */}
       <Button
+        style={styles.butt}
         variant="outlined"
         title="SELECCIONAR FECHA"
         onPress={() => setShow(true)}
@@ -53,10 +54,15 @@ const BirthInput = () => {
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
-          // TODO: Esto deberia estar funcionando.... Me lleva a 1922 
+          // TODO: Esto deberia estar funcionando.... Me lleva a 1922
           minimumDate={new Date(1, 1, 1900)}
-          maximumDate={new Date(today.getDate(), today.getMonth(), today.getFullYear() -18)}
-
+          maximumDate={
+            new Date(
+              today.getDate(),
+              today.getMonth(),
+              today.getFullYear() - 18
+            )
+          }
           onChange={onChange}
         />
       )}
@@ -64,5 +70,9 @@ const BirthInput = () => {
   );
 };
 
-const styles = StyleSheet.create({root:{textAlign:'center'}, text: {} });
+const styles = StyleSheet.create({
+  root: { display: "flex", flexWrap: "wrap", flexDirection: "row" },
+  butt: { width: "60%", textAlignVertical: "center", textAlign: "center" ,padding: 0},
+  text: { width: "40%", padding: 0 },
+});
 export default BirthInput;

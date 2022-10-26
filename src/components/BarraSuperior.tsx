@@ -8,9 +8,9 @@ import SearchBar from "./SearchBar";
 
 interface Props {
   nombre: string;
-  tieneSearchBar?: boolean | undefined
-  pressed: boolean
-  wasPressed: (was:boolean)=>void
+  tieneSearchBar?: boolean;
+  pressed?: boolean;
+  wasPressed: (wasIt: boolean) => void;
 }
 
 const BarraSuperior: FC<Props> = (props) => {
@@ -20,12 +20,17 @@ const BarraSuperior: FC<Props> = (props) => {
     <Appbar.Header>
       {/* ack */}
       <Appbar.BackAction onPress={() => {}} />
-      <Appbar.Content title={props.nombre}/>
-      {/*TODO: Aca la idea es que aparesca la barrita porque no funciona? */}
-      {/* Le puse el () para que se deje de joder */}
-
-      {props.tieneSearchBar &&<Appbar.Action icon="magnify" onPress={()=>{props.wasPressed(!props.pressed)
-      props.pressed= !props.pressed}} />}
+      <Appbar.Content title={props.nombre} />
+      {/* TODO: Tal vez luego hago algo para o que se anime al aparecer o que el "home" se transforme en la seacrhbar misma.. luego vemos. */}
+      {props.tieneSearchBar && (
+        <Appbar.Action
+          icon="magnify"
+          onPress={() => {
+            props.wasPressed(!props.pressed);
+            props.pressed = !props.pressed;
+          }}
+        />
+      )}
     </Appbar.Header>
     // <View>
     //   <AppBar

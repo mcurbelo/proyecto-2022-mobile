@@ -10,13 +10,44 @@ import SingleInput from "../components/SingleInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import BirthInput from "../components/BirthInput";
 
-import { Button, Text } from "@react-native-material/core";
+import { Button, Text, TextInput } from "@react-native-material/core";
 import BarraSuperior from "../components/BarraSuperior";
 import PasswdValidation from "../components/PasswdValidation";
+import { Snackbar } from "react-native-paper";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 // import ResultadoValidacion from "../components/PasswdValidation"
+
+import { UserService } from "shopit-shared";
+import {moment} from 'moment'
 
 const checkPassword = (p: string, r: string) => {
   if (p !== r) return false;
+};
+
+type PasswordState = {
+  password: string;
+  repeatPassword: string;
+};
+
+type Error = {
+  error: boolean;
+  message: string;
+};
+
+const registrar = (v) => {
+
+  let fecha = new Date(v.fecha)
+  // let fechaForm = (fecha, "dd/MM/yyyy")
+  const fechaForm = 
+
+  UserService.registrarUsuario({
+    nombre: v.nombre,
+    apellido: v.apellido,
+    correo: v.email,
+    password: v.password,
+    telefono: v.telefono,
+    fechaNac: fechaForm,
+  });
 };
 
 const RegistrarScreen = () => {
@@ -33,14 +64,30 @@ const RegistrarScreen = () => {
 
   const [validacion, setValidacion] = useState(false);
 
+  const [search, setSearch] = useState("");
+  const [pressed, wasPressed] = useState(false);
+
+  const doStuff = () => {
+    if (!validacion) {
+      console.log("HEE HEE");
+    }
+  };
+
   // const [rePass, setRepass] = useState("");
 
   return (
     <SafeAreaView>
-      <BarraSuperior nombre="Registrar" />
+      {/* Waspressed queda para que no me joda en el BarraSuperior */}
+      <BarraSuperior
+        nombre="Registrar"
+        wasPressed={wasPressed}
+        pressed={pressed}
+        tieneSearchBar={false}
+      />
 
       <ScrollView contentContainerStyle={styles.root}>
         {/*  RNFE */}
+
         <SingleInput
           placeholder="EMAIL"
           value={mail}
@@ -53,22 +100,6 @@ const RegistrarScreen = () => {
         />
         <SingleInput placeholder="NOMBRE" value={nom} setValue={setNom} />
         <SingleInput placeholder="Apellido" value={ape} setValue={setApe} />
-        {/* TODO: Porque los <Text/> aparecen asi...2 */}
-        {!validacion && (
-          <Text style={styles.warning}>no wachin la pass esta mal</Text>
-        )}
-        {/* <SingleInput
-          placeholder="Ingrese su contraseña"
-          value={pass}
-          setValue={setPass}
-          secureTextEntry={true}
-        />
-        <SingleInput
-          placeholder="Vuelva a ingresar su contraseña"
-          value={rePass}
-          setValue={setRepass}
-          secureTextEntry={true}
-        /> */}
 
         {checkPassword(pass, rePass) && <Button title="YES" />}
         <PasswdValidation
@@ -81,7 +112,11 @@ const RegistrarScreen = () => {
         />
         <BirthInput />
 
-        <Button title="Iniciar Sesion" style={styles.btn} />
+        <Button
+          title="Registrar"
+          style={styles.btn}
+          onPress={() => doStuff()}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -92,13 +127,15 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "space-around",
     // height: "100%",
-    // padding: 50,
+    padding: 30,
   },
   warning: {
     // color: "red",
     // alignItems: "center",
   },
   btn: {
+    padding: 20,
+    margin: 40,
     // width: "90%",
   },
 });

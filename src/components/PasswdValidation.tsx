@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView } from "react-native";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import SingleInput from "./SingleInput";
 
 interface Props {
@@ -20,14 +20,28 @@ interface Props {
 // }
 
 const PasswdValidation: FC<Props> = (props) => {
-  const val = () => {
-      // TODO: No encontre que otra cosa usamos pero aca supongo que lo ponemos ya sea si necesitamos que la pass tenga mayusculas y bla~~
 
-      // TODO:2 Aca me salta que no puedo actualizar un componente (RegistrarScreen) cuando estoy renderizando este. Pero como lo hago entonces? 
+  useEffect(() => {
+    
+
+  // Esto se autocompleto
+    // return () => {
+    // }
+    // ""
+    // Ejecutar luego de renderizar. Evita problemas con renderizaciones de mas abajo
+    val()
+
+
+    
+
+  }, [props.pass , props.rePass])
+  
+  const val = () => {
+    // TODO: Aca podemos poner todo lo que sea validificar las contraseñas.
+    // por ahora solo dejo pass=repass como prueba.
     if (props.pass === props.rePass) props.setValidacion(true);
     else props.setValidacion(false);
   };
-  val();
 
   return (
     <View>
@@ -37,6 +51,7 @@ const PasswdValidation: FC<Props> = (props) => {
         setValue={props.setPass}
         secureTextEntry={true}
       />
+
       <SingleInput
         placeholder="Vuelva a ingresar su contraseña"
         value={props.rePass}

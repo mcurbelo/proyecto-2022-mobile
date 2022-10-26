@@ -1,4 +1,11 @@
-import { SafeAreaView, Text, StyleSheet, View } from "react-native";
+import {
+  SafeAreaView,
+  Text,
+  StyleSheet,
+  View,
+  NativeSyntheticEvent,
+  TextInputFocusEventData,
+} from "react-native";
 import React, { useLayoutEffect, FC } from "react";
 
 import { useNavigation } from "@react-navigation/native";
@@ -8,16 +15,23 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 interface Props {
   text: string;
   setText: (text: string) => void;
+
+  // TODO: Me enganche innecesariemente con el quitar el searchbar luego de descliquearla..
+  // setBlur: (e:NativeSyntheticEvent<TextInputFocusEventData>) => void
+  // isBlurred: Boolean;
+  // setBlur?: (is: boolean) =>void
 }
 
 import { Searchbar } from "react-native-paper";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 const SearchBar: FC<Props> = (props) => {
-  const navi = useNavigation();
-
   return (
     <View>
-      <Searchbar onChangeText={props.setText} value={props.text} />
+      <Searchbar
+        onChangeText={props.setText}
+        value={props.text} /* onBlur={props.setBlur} */
+      />
 
       {/* <TextInput
         placeholder="Buscar"

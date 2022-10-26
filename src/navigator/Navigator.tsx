@@ -22,7 +22,7 @@ const Tab = createMaterialBottomTabNavigator<TabNavigatorParamList>();
 function HomeTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="HomeScreen" component={HomeScreen} />
+      <Tab.Screen  name="HomeScreen" component={HomeScreen} />
       <Tab.Screen name="RegistrarScreen" component={RegistrarScreen} />
 
       {/* TODO: quito por ahora */}
@@ -39,8 +39,8 @@ export class Navigator extends Component {
       // TODO: pense que styles genericos podria pegarlos
       // <SafeAreaView style={styles.root}>
 
-      <NavigationContainer >
-        <Stack.Navigator > 
+      <NavigationContainer  >
+        <Stack.Navigator  > 
             <Stack.Screen
               name="HomeTabs"
               component={HomeTabs}
