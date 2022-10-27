@@ -18,7 +18,9 @@ import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 // import ResultadoValidacion from "../components/PasswdValidation"
 
 import { UserService } from "shopit-shared";
-import {moment} from 'moment'
+// intentando hacer import de moment pero no puedo sin arreglar los err
+
+// import {moment} from
 
 const checkPassword = (p: string, r: string) => {
   if (p !== r) return false;
@@ -34,20 +36,29 @@ type Error = {
   message: string;
 };
 
-const registrar = (v) => {
+// const registrar = (v) => {
 
-  let fecha = new Date(v.fecha)
-  // let fechaForm = (fecha, "dd/MM/yyyy")
-  const fechaForm = 
+//   let fecha = new Date(v.fecha)
+//   // let fechaForm = (fecha, "dd/MM/yyyy")
 
-  UserService.registrarUsuario({
-    nombre: v.nombre,
-    apellido: v.apellido,
-    correo: v.email,
-    password: v.password,
-    telefono: v.telefono,
-    fechaNac: fechaForm,
-  });
+//   UserService.registrarUsuario({
+//     nombre: v.nombre,
+//     apellido: v.apellido,
+//     correo: v.email,
+//     password: v.password,
+//     telefono: v.telefono,
+//     fechaNac: fechaForm,
+//   });
+// };
+
+type PersonaRegistrar = {
+  mail: string;
+  nom: string;
+  ape: string;
+  pass: string;
+  rePass: string;
+  validacion: boolean;
+  pressed: boolean;
 };
 
 const RegistrarScreen = () => {
@@ -55,6 +66,7 @@ const RegistrarScreen = () => {
   const { height, width } = useWindowDimensions();
 
   // State
+  // TODO: Objeto en lugar de tantos states
   const [mail, setMail] = useState("");
   const [nom, setNom] = useState("");
   const [ape, setApe] = useState("");
@@ -66,6 +78,16 @@ const RegistrarScreen = () => {
 
   const [search, setSearch] = useState("");
   const [pressed, wasPressed] = useState(false);
+
+  const [state, setState] = useState({
+    mail: "",
+    nom: "",
+    ape: "",
+    pass: "",
+    rePass: "",
+    validacion: false,
+    pressed: false,
+  } as PersonaRegistrar);
 
   const doStuff = () => {
     if (!validacion) {
