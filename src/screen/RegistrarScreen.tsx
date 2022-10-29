@@ -10,30 +10,36 @@ import SingleInput from "../components/SingleInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import BirthInput from "../components/BirthInput";
 
-import { Button, Text, TextInput } from "@react-native-material/core";
+import { Button, Text } from "@react-native-material/core";
 import BarraSuperior from "../components/BarraSuperior";
 import PasswdValidation from "../components/PasswdValidation";
-import { Snackbar } from "react-native-paper";
+import { Snackbar, TextInput } from "react-native-paper";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 // import ResultadoValidacion from "../components/PasswdValidation"
 
 import { UserService } from "shopit-shared";
+import { enableExpoCliLogging } from "expo/build/logs/Logs";
+import FechaNac from "../components/FechaNac";
 // intentando hacer import de moment pero no puedo sin arreglar los err
 
 // import {moment} from
 
-const checkPassword = (p: string, r: string) => {
-  if (p !== r) return false;
-};
+const checkPassword = (
+  p: string,
+  r: string,
+  visible: boolean,
+  setVisible: (e: boolean) => void
+) => {
+  if (p !== r) {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAA");
+    // WOOP
 
-type PasswordState = {
-  password: string;
-  repeatPassword: string;
-};
-
-type Error = {
-  error: boolean;
-  message: string;
+    return (
+      <Snackbar visible={true} onDismiss={() => setVisible(false)}>
+        Porfavor asegurese que las contraseñas igual en ambos campos
+      </Snackbar>
+    );
+  }
 };
 
 // const registrar = (v) => {
@@ -59,6 +65,7 @@ type PersonaRegistrar = {
   rePass: string;
   validacion: boolean;
   pressed: boolean;
+  fechaNac: Date;
 };
 
 const RegistrarScreen = () => {
@@ -67,14 +74,14 @@ const RegistrarScreen = () => {
 
   // State
   // TODO: Objeto en lugar de tantos states
-  const [mail, setMail] = useState("");
-  const [nom, setNom] = useState("");
-  const [ape, setApe] = useState("");
+  // const [mail, setMail] = useState("");
+  // const [nom, setNom] = useState("");
+  // const [ape, setApe] = useState("");
 
-  const [pass, setPass] = useState("");
-  const [rePass, setRepass] = useState("");
+  // const [pass, setPass] = useState("");
+  // const [rePass, setRepass] = useState("");
 
-  const [validacion, setValidacion] = useState(false);
+  // const [validacion, setValidacion] = useState(false);
 
   const [search, setSearch] = useState("");
   const [pressed, wasPressed] = useState(false);
@@ -87,10 +94,13 @@ const RegistrarScreen = () => {
     rePass: "",
     validacion: false,
     pressed: false,
+    fechaNac: new Date(),
   } as PersonaRegistrar);
 
+  const [visible, setVisible] = useState(false);
+
   const doStuff = () => {
-    if (!validacion) {
+    if (!state.validacion) {
       console.log("HEE HEE");
     }
   };
@@ -110,6 +120,47 @@ const RegistrarScreen = () => {
       <ScrollView contentContainerStyle={styles.root}>
         {/*  RNFE */}
 
+        <TextInput
+          mode="outlined"
+          label="Email"
+          placeholder="escriba su e-mail aqui."
+          value={state.mail}
+          onChangeText={(e) => setState({ ...state, mail: e.valueOf() })}
+        />
+        <TextInput
+          mode="outlined"
+          label="Nombre"
+          placeholder="escriba su nombre aqui."
+          value={state.nom}
+          onChangeText={(e) => setState({ ...state, nom: e.valueOf() })}
+        />
+        <TextInput
+          mode="outlined"
+          label="Apellido"
+          placeholder="escriba su apellido aqui."
+          value={state.ape}
+          onChangeText={(e) => setState({ ...state, ape: e.valueOf() })}
+        />
+
+        <PasswdValidation
+          pass={state.pass}
+          rePass={state.rePass}
+          validacion={state.validacion}
+          setPass={(e) => setState({ ...state, pass: e })}
+          setRepass={(e) => setState({ ...state, rePass: e })}
+          setValidacion={(e) => setState({ ...state, validacion: e })}
+        />
+
+        {/* TODO REFACTOR THIS SHIT */}
+        {/* <BirthInput /> */}
+        <FechaNac
+          setDate={(e) => setState({ ...state, fechaNac: e })}
+          date={state.fechaNac}
+        />
+
+        {checkPassword(state.pass, state.rePass, visible, setVisible)}
+
+        {/* 
         <SingleInput
           placeholder="EMAIL"
           value={mail}
@@ -138,7 +189,7 @@ const RegistrarScreen = () => {
           title="Registrar"
           style={styles.btn}
           onPress={() => doStuff()}
-        />
+        /> */}
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,15 +1,21 @@
-import { StyleSheet, View, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+} from "react-native";
 import React, { FC, Dispatch, SetStateAction } from "react";
-import {TextInput} from 'react-native-paper'
+import { TextInput } from "react-native-paper";
 
 interface Props {
   placeholder: string;
   secureTextEntry?: boolean;
   value: string;
-  setValue: (text: string) => void;
-  disabled?: boolean | undefined
+  setValue: (e: string) => void;
+  disabled?: boolean | undefined;
 
-  
+  setState: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
 
   // onChange?: (val: string) => void;
 
@@ -32,12 +38,12 @@ const SingleInput: FC<Props> = (props) => {
         // textContentType={props.textCType}
         disabled={props.disabled}
         mode="outlined"
-        
         placeholder={props.placeholder}
         textAlign="center"
         secureTextEntry={props.secureTextEntry}
-        value={props.value}
-        onChangeText={props.setValue}
+        // value={props.value}
+        // onChangeText={props.setValue}
+        onChange={props.setState}
       />
     </View>
   );
@@ -46,18 +52,18 @@ const SingleInput: FC<Props> = (props) => {
 const styles = StyleSheet.create({
   root: {
     // alignItems: "center",
-    paddingTop:10,
-    paddingBottom: 10
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   input: {
-  //   // TODO: Aca quisiera poner tipo screenwidth* 0.8 para estar masomenos igual en todos los lados o algo asi no se.. pero no encontre como meterle una variable aca el metodo style={styles.input(aca una var)} no sirvio
-  //   width: 300,
-  //   padding: 10,
-  //   borderStyle: "solid",
-  //   borderWidth: 1,
-  //   backgroundColor: "white",
-  //   borderRadius: 25,
-  //   fontSize: 20,
+    //   // TODO: Aca quisiera poner tipo screenwidth* 0.8 para estar masomenos igual en todos los lados o algo asi no se.. pero no encontre como meterle una variable aca el metodo style={styles.input(aca una var)} no sirvio
+    //   width: 300,
+    //   padding: 10,
+    //   borderStyle: "solid",
+    //   borderWidth: 1,
+    //   backgroundColor: "white",
+    //   borderRadius: 25,
+    //   fontSize: 20,
     marginTop: 10,
     marginBottom: 10,
   },

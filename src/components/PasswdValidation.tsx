@@ -1,6 +1,7 @@
 import { View, Text, SafeAreaView } from "react-native";
 import React, { FC, useEffect, useState } from "react";
 import SingleInput from "./SingleInput";
+import { TextInput } from "react-native-paper";
 
 interface Props {
   pass: string;
@@ -20,22 +21,15 @@ interface Props {
 // }
 
 const PasswdValidation: FC<Props> = (props) => {
-
   useEffect(() => {
-    
-
-  // Esto se autocompleto
+    // Esto se autocompleto
     // return () => {
     // }
     // ""
     // Ejecutar luego de renderizar. Evita problemas con renderizaciones de mas abajo
-    val()
+    val();
+  }, [props.pass, props.rePass]);
 
-
-    
-
-  }, [props.pass , props.rePass])
-  
   const val = () => {
     // TODO: Aca podemos poner todo lo que sea validificar las contraseñas.
     // por ahora solo dejo pass=repass como prueba.
@@ -45,19 +39,32 @@ const PasswdValidation: FC<Props> = (props) => {
 
   return (
     <View>
-      <SingleInput
+      {/* <SingleInput
         placeholder="Ingrese su contraseña"
         value={props.pass}
         setValue={props.setPass}
         secureTextEntry={true}
+      /> */}
+
+      <TextInput
+        placeholder="Ingrese su contraseña"
+        secureTextEntry={true}
+        value={props.pass}
+        onChangeText={props.setPass}
+      />
+      <TextInput
+        placeholder="Vuelva a ingresar su contrasena"
+        secureTextEntry={true}
+        value={props.rePass}
+        onChangeText={props.setRepass}
       />
 
-      <SingleInput
+      {/* <SingleInput
         placeholder="Vuelva a ingresar su contraseña"
         value={props.rePass}
         setValue={props.setRepass}
         secureTextEntry={true}
-      />
+      /> */}
     </View>
   );
 };

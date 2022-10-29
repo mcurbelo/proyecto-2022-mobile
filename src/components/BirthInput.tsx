@@ -4,10 +4,20 @@ import { Button, Text } from "@react-native-material/core";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { TextInput } from "react-native-paper";
 import SingleInput from "./SingleInput";
+
+
+
+
+
 const BirthInput = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [text, setText] = useState("Selected Date");
+
+
+
+
+
 
   // const showMode = () => setShow(true);
 
