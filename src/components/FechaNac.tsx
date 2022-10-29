@@ -22,26 +22,17 @@ const FechaNac: FC<Props> = (props) => {
     today.getFullYear() - 18
   );
 
-  const dateChange = (e, d) => {
+  const dateChange = (date: Date | undefined) => {
     //   onChange?: (event: DateTimePickerEvent, date?: Date) => void;
     // las fecha es o D o la que ya estaba?
-    const currentDate =  d 
+    const currentDate =  date! 
     console.log("AAAAAAAAAAA")
-    setState({ ...state, show: Platform.OS === "ios" });
-
     setState({ ...state, date: currentDate });
-
     let tmpDate = new Date(currentDate);
     const formDate = `${tmpDate.getDate()}/${
       tmpDate.getMonth() + 1
     }/${tmpDate.getFullYear()}`;
-
-    setState({ ...state, text: formDate });
-
-    console.log(formDate);
-    
-
-    setState({ ...state, show: false });
+    setState({ ...state, text: formDate, show: false});
   };
 
   return (
@@ -59,10 +50,8 @@ const FechaNac: FC<Props> = (props) => {
           value={state.date}
           maximumDate={new Date(2000, 1, 1)}
           minimumDate={new Date(1800,1,1)}
-          onChange={(e, d) => dateChange}
-          // display="spinner"
+          onChange={(e, d) => dateChange(d)}
           mode="date" 
-
         />
       )}
     </View>
