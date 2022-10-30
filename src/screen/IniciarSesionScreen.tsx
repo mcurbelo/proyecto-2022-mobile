@@ -1,6 +1,5 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import SingleInput from "../components/SingleInput";
 import BarraSuperior from "../components/BarraSuperior";
 import { Button, Flex } from "@react-native-material/core";
 
@@ -18,7 +17,7 @@ const IniciarSesionScreen = () => {
       
 
       <ScrollView contentContainerStyle={styles.root}>
-        <SingleInput
+        {/* <SingleInput
           placeholder="Ingrese su usuario"
           value={usuario}
           setValue={setUsuario}
@@ -29,7 +28,7 @@ const IniciarSesionScreen = () => {
           value={pass}
           setValue={setPass}
           secureTextEntry={true}
-        />
+        /> */}
         <Button title="Iniciar Sesion" />
       </ScrollView>
     </View>

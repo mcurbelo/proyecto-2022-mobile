@@ -1,6 +1,5 @@
 import { View, Text, SafeAreaView } from "react-native";
 import React, { FC, useEffect, useState } from "react";
-import SingleInput from "./SingleInput";
 import { TextInput } from "react-native-paper";
 
 interface Props {
@@ -39,24 +38,21 @@ const PasswdValidation: FC<Props> = (props) => {
 
   return (
     <View>
-      {/* <SingleInput
-        placeholder="Ingrese su contraseña"
-        value={props.pass}
-        setValue={props.setPass}
-        secureTextEntry={true}
-      /> */}
-
       <TextInput
         placeholder="Ingrese su contraseña"
         secureTextEntry={true}
         value={props.pass}
         onChangeText={props.setPass}
+        mode="outlined"
+        label="Password"
       />
       <TextInput
         placeholder="Vuelva a ingresar su contrasena"
         secureTextEntry={true}
         value={props.rePass}
         onChangeText={props.setRepass}
+        mode="outlined"
+        label="Password again"
       />
 
       {/* <SingleInput

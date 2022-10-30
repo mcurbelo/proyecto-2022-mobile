@@ -25,14 +25,15 @@ const FechaNac: FC<Props> = (props) => {
   const dateChange = (date: Date | undefined) => {
     //   onChange?: (event: DateTimePickerEvent, date?: Date) => void;
     // las fecha es o D o la que ya estaba?
-    const currentDate =  date! 
-    console.log("AAAAAAAAAAA")
+    const currentDate = date!;
     setState({ ...state, date: currentDate });
     let tmpDate = new Date(currentDate);
     const formDate = `${tmpDate.getDate()}/${
       tmpDate.getMonth() + 1
     }/${tmpDate.getFullYear()}`;
-    setState({ ...state, text: formDate, show: false});
+    setState({ ...state, text: formDate, show: false });
+
+    console.log("fecha" + formDate);
   };
 
   return (
@@ -41,17 +42,18 @@ const FechaNac: FC<Props> = (props) => {
         mode="outlined"
         onPress={() => setState({ ...state, show: true })}
       >
-        Seleccione Fecha
+        {state.text || "Seleccione Fecha"}
       </Button>
-      <TextInput value={state.text} />
       {state.show && (
         <DateTimePicker
           testID="dateTimePicker"
           value={state.date}
           maximumDate={new Date(2000, 1, 1)}
-          minimumDate={new Date(1800,1,1)}
+          minimumDate={new Date(1800, 1, 1)}
           onChange={(e, d) => dateChange(d)}
-          mode="date" 
+          mode="date"
+          // TODO: Dejo el spinner porque en android hay que poner un workaround que no tengo ganas de hacer ahora 👍
+          // display="spinner"
         />
       )}
     </View>
