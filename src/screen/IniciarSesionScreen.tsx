@@ -2,6 +2,7 @@ import { View, Text, ScrollView, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import BarraSuperior from "../components/BarraSuperior";
 import { Button, Flex } from "@react-native-material/core";
+import { MMKVInstance, MMKVLoader } from "react-native-mmkv-storage";
 
 const IniciarSesionScreen = () => {
   const [pass, setPass] = useState("");
@@ -29,11 +30,17 @@ const IniciarSesionScreen = () => {
           setValue={setPass}
           secureTextEntry={true}
         /> */}
-        <Button title="Iniciar Sesion" />
+        <Button title="Iniciar Sesion"  onPress={()=>wach()}/>
       </ScrollView>
     </View>
   );
 };
+const wach = ()=> {
+  const mmk = new MMKVLoader().initialize();
+  const UUID = mmk.getStringAsync("UUID");
+  console.log(UUID)
+
+}
 const styles = StyleSheet.create({
   root: {
     //   display: "flex",

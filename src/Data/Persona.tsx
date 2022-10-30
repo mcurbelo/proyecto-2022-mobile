@@ -11,4 +11,5 @@ type PersonaRegistrar = {
     fechaNac: Date;
   };
 
+
   export default PersonaRegistrar
