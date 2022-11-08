@@ -23,13 +23,13 @@ export type RootStackParamList = {
 
 
   LogOrSign: {
-    logged: string;
-    setLogged: (v: string) => void;
+    token: string;
+    setToken: (v: string) => void;
   };
   SignScreen: undefined
   LoginScreen: {
-    logged: string;
-    setLogged: (v: string) => void;
+    token: string;
+    setToken: (v: string) => void;
   };
 };
 

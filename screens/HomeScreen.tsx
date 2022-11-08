@@ -1,10 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { RootTabParamList, RootTabScreenProps } from "../types";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NavigationHelpersContext } from "@react-navigation/native";
+import { CommonActions, NavigationHelpersContext } from "@react-navigation/native";
 
 // interface Props {
 //   navigation: RootTabScreenProps<"HomeScreen">;
@@ -16,25 +16,32 @@ const HomeScreen = ({
   route,
   navigation,
 }: RootTabScreenProps<"HomeScreen">) => {
+  const [logged, setLogged] = useState({ uuid: "", token: "" });
+
   const logout = () => {
     AsyncStorage.removeItem("@uuid");
+    AsyncStorage.removeItem("@token");
+    setLogged({ ...logged, uuid: "", token: "" });
+
+    // const resetNavigation = CommonActions.reset({
+    //   index:0,
+    //   routes: [{name:"Root"}]
+    // })
+
     navigation.navigate("Root");
   };
-  const isLogged = async () => {
-    return AsyncStorage.getItem("@uuid")
-      .then(() => true)
-      .catch((e) => false);
-  };
-  let uuid = "";
+  useEffect(() => {
+    AsyncStorage.getItem("@uuid").then((v)=>{if(v!=null) setLogged({...logged, uuid: v})})
+    AsyncStorage.getItem("@token").then((v)=>{if(v!=null) setLogged({...logged, token: v})})
 
-  AsyncStorage.getItem("@uuid").then((v) => {
-    if (v != null) uuid = v;
-console.log(`UUID ${uuid}`);
+    
+  },[])
 
-  });
 
   return (
-    <View>{uuid != "" && <Button onPress={() => logout()}>OUT</Button>}</View>
+    <View>
+      {logged.token != "" && <Button onPress={() => logout()}>OUT</Button>}
+    </View>
   );
 };
 

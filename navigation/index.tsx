@@ -69,7 +69,8 @@ function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   // TODO: Cambiar los usestate a otro lado tal vez no se 
-  const [logged, setLogged] = useState('')
+  const [state, setState] = useState({token: '', })
+  const [token, setToken] = useState('')
 
   return (
     <BottomTab.Navigator
@@ -84,6 +85,7 @@ function BottomTabNavigator() {
         // options= {({navigation})}
         options={({ navigation }: RootTabScreenProps<'HomeScreen'>) => ({
           title: 'Home Screen',
+          unmountOnBlur: true,
           
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
@@ -91,8 +93,9 @@ function BottomTabNavigator() {
 
             <Pressable
               onPress={() => navigation.navigate('LogOrSign', {
-                logged: logged,
-                setLogged: setLogged,
+                token: token,
+                setToken: (e)=>setToken(e)
+                // onChangeText={(e) => setState({ ...state, pass: e.valueOf() })}
 
               })}
               style={({ pressed }) => ({
