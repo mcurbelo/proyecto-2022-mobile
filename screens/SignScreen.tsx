@@ -33,14 +33,11 @@ const SignScreen = ({ navigation }: RootStackScreenProps<"SignScreen">) => {
           // console.log(response.uuid);
           AsyncStorage.setItem("@uuid", response.uuid);
           AsyncStorage.setItem("@token", response.token);
-         
 
-          navigation.navigate('Root')
-
-        
+          navigation.navigate("Root");
         } else {
           // TODO: SHOW ERROR
-       
+
           console.log(response.error);
         }
       })
@@ -64,7 +61,7 @@ const SignScreen = ({ navigation }: RootStackScreenProps<"SignScreen">) => {
         value={state.nom}
         onChangeText={(e) => setState({ ...state, nom: e.valueOf() })}
       />
-      
+
       <TextInput
         mode="outlined"
         label="Apellidos"
@@ -79,7 +76,7 @@ const SignScreen = ({ navigation }: RootStackScreenProps<"SignScreen">) => {
         value={state.tel}
         onChangeText={(e) => setState({ ...state, tel: e.valueOf() })}
       />
-     <TextInput
+      <TextInput
         mode="outlined"
         label="Fecha"
         placeholder="Fecha de nacimiento"
