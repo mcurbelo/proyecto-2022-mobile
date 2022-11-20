@@ -119,7 +119,9 @@ export default function TabOneScreen({
               </Text>
             </>
           }
-          onRefresh={() => {}}
+          onRefresh={() => {
+            forcedRefresh();
+          }}
           refreshing={state.isLoading}
           data={state.productos.filter(function (item, pos) {
             return state.productos.indexOf(item) == pos;
