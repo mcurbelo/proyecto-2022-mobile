@@ -20,7 +20,6 @@ export const iniciarSesion = (
       };
     })
     .catch((error) => {
-      console.log(JSON.stringify(error));
       return { success: false };
     });
 };

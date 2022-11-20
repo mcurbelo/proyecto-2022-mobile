@@ -292,7 +292,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation ('com.google.firebase:firebase-messaging:23.1.0')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
+    implementation project(':@react-native-community_viewpager')
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

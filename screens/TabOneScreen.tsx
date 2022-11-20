@@ -102,7 +102,6 @@ export default function TabOneScreen({
           mode="outlined"
           returnKeyType="search"
           onSubmitEditing={(value) => {
-            console.log(value.nativeEvent.text);
             filterByName(value.nativeEvent.text);
           }}
         />

@@ -33,13 +33,6 @@ export default function TabTwoScreen(allProps: any) {
       buttonNegative: "NO",
     });
 
-    messaging().onMessage(async (message) => {
-      Alert.alert(
-        message.notification?.title ?? "Nueva Notificacion",
-        message.notification?.body
-      );
-    });
-
     const fcmToken = await messaging().getToken();
     return fcmToken;
   };

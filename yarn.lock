@@ -1966,6 +1966,11 @@
   dependencies:
     "invariant" "^2.2.4"
 
+"@react-native-community/viewpager@^5.0.11":
+  "integrity" "sha512-eboJwbDQjP1qJP3LFzVspgh88IGNF07S2qpU296j+4kL0inVuL+HXs81SuczMGtJmDZ4u19RNEBVq79of/h+jQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/viewpager/-/viewpager-5.0.11.tgz"
+  "version" "5.0.11"
+
 "@react-native-firebase/app@^16.4.6", "@react-native-firebase/app@16.4.6":
   "integrity" "sha512-rL/vhylwzj9ziKAqEOI6G3eIGiJRcI9dcM93+gG7pEv1mNBHKmhnuq9VPS8nR01qyI/PYWoKN6XecE0w7A7n4w=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-16.4.6.tgz"

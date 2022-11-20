@@ -17,7 +17,7 @@ const CheckoutFlowScreen = ({
   route,
 }: CheckoutFlowStack<"SelectCard">) => {
   const [state, setState] = useState({ isLoading: true } as CheckoutState);
-  console.log(route.params.productId);
+
   useEffect(() => {
     Promise.all<string | null>([
       AsyncStorage.getItem("@token"),
@@ -53,7 +53,6 @@ const CheckoutFlowScreen = ({
             <FlatList
               data={state.cards}
               renderItem={(item) => {
-                console.log(item);
                 return (
                   <CreditCardView
                     card={item.item}

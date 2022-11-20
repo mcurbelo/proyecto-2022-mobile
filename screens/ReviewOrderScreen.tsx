@@ -37,7 +37,7 @@ const ReviewOrderScreen = ({
         setState({ ...state, isLoading: false, product: product });
       })
       .catch((error) => {
-        console.log(JSON.stringify(error));
+        
       });
   }, []);
   return (
