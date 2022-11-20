@@ -83,6 +83,12 @@ const ProductDetailsScreen = ({
             </Text>
           </View>
           {separator()}
+          <View style={{ flexDirection: "row" }}>
+            <Text>Precio: </Text>
+            <Text style={{fontWeight: "bold"}}>${state.product.precio}</Text>
+          </View>
+
+          {separator()}
         </View>
       )}
 
@@ -91,7 +97,7 @@ const ProductDetailsScreen = ({
         onTouchEnd={() =>
           navigation.navigate("SelectCard", {
             productId: state.product.idProducto,
-            canDelivery: state.product.permiteEnvio
+            canDelivery: state.product.permiteEnvio,
           })
         }
       >

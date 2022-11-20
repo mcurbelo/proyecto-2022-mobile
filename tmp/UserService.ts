@@ -3,12 +3,14 @@ export const ip = "http://10.0.2.2:8080";
 
 export const iniciarSesion = (
   email: string,
-  password: string
+  password: string,
+  token: string | null
 ): Promise<IniciarSesionResponse> => {
   return axios
     .post(`${ip}/api/auth/iniciarSesion`, {
       correo: email,
       password: password,
+      tokenMobile: token,
     })
     .then((response) => {
       return {

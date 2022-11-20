@@ -81,6 +81,13 @@ const CheckoutFlowScreen = ({
               });
             }}
           />
+          <View style={{height: 8}} />
+          <Button
+            title="Agregar tarjeta"
+            onPress={() => {
+              navigation.navigate("AddCard");
+            }}
+          />
         </>
       )}
     </SafeAreaView>

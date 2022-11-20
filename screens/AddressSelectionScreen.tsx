@@ -10,7 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type AddressSelectionState = {
   isDelivery: boolean;
-  pickupAddresses: Direccion[];
+  pickupAddresses: Direccion[] | DtDireccion[];
   deliveryAddresses: DtDireccion[];
   selectedAddress: Direccion | DtDireccion;
 };
@@ -26,7 +26,6 @@ const AddressSelectionScreen = ({
       let token = await AsyncStorage.getItem("@token");
       let uuid = await AsyncStorage.getItem("@uuid");
       if (!token || !uuid) return;
-      debugger;
       obtenerDirecciones(token)
         .then((response) => {
           setState({
@@ -88,7 +87,7 @@ const AddressSelectionScreen = ({
         >
           Direcciones de Retiro
         </Text>
-        <FlatList
+        <FlatList<DtDireccion | Direccion>
           data={state.pickupAddresses}
           renderItem={(item) => {
             return (

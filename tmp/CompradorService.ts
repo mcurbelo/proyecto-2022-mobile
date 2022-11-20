@@ -1,4 +1,5 @@
 import axios from "axios";
+import { EstadoCompra, listados } from "./ProductService";
 import { ip } from "./UserService";
 // import { DtAltaProducto, DtFiltoReclamo, EstadoCompra, listados, TipoReclamo } from "./VendedorService"
 
@@ -19,6 +20,15 @@ import { ip } from "./UserService";
 //         },
 //     })
 // }
+export const borrarDireccion = (
+  token: string,
+  direccion: string
+): Promise<{ status: number }> => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return axios.delete(`${ip}/api/compradores/Direccion/${direccion}`, config);
+};
 
 export const agregarDireccion = (
   token: string,
@@ -106,24 +116,39 @@ export const nuevaCompra = (
   });
 };
 
-// export const listarCompras = (idUsuario: string, token: string, pageNo: string, pageSize: string, sortBy: string, sortDir: string, filtros: DtFiltrosCompras): Promise<listados> => {
-//     const searchParams = new URLSearchParams();
-//     if (pageNo != "") searchParams.append("pageNo", pageNo);
-//     if (pageSize != "") searchParams.append("pageSize", pageSize);
-//     if (sortBy != "") searchParams.append("sortBy", sortBy);
-//     if (sortDir != "") searchParams.append("sortDir", sortDir);
-//     if (filtros.nombreProducto != undefined) searchParams.append("nombreProducto", filtros.nombreProducto);
-//     if (filtros.nombreVendedor != undefined) searchParams.append("nombreVendedor", filtros.nombreVendedor);
-//     if (filtros.fecha != undefined) searchParams.append("fecha", filtros.fecha);
-//     if (filtros.estado != undefined) searchParams.append("estado", filtros.estado.toString());
-//     return axios.get(`${ip}/api/compradores/${idUsuario}/compras?${searchParams.toString()}`, {
-//     }).then((response) => {
-//         return response.data;
-//     })
-//         .catch((error) => {
-//             return error.response.data.message;
-//         })
-// }
+export const listarCompras = (
+  idUsuario: string,
+  token: string,
+  pageNo: string,
+  pageSize: string,
+  sortBy?: string,
+  sortDir?: string,
+  filtros?: DtFiltrosCompras
+): Promise<any> => {
+  const searchParams = new URLSearchParams();
+  if (pageNo != "") searchParams.append("pageNo", pageNo);
+  if (pageSize != "") searchParams.append("pageSize", pageSize);
+  if (sortBy && sortBy != "") searchParams.append("sortBy", sortBy);
+  if (sortDir && sortDir != "") searchParams.append("sortDir", sortDir);
+  if (filtros && filtros.nombreProducto != undefined)
+    searchParams.append("nombreProducto", filtros.nombreProducto);
+  if (filtros && filtros.nombreVendedor != undefined)
+    searchParams.append("nombreVendedor", filtros.nombreVendedor);
+  if (filtros && filtros.fecha != undefined)
+    searchParams.append("fecha", filtros.fecha);
+  if (filtros && filtros.estado != undefined)
+    searchParams.append("estado", filtros.estado.toString());
+  return axios.get(
+    `${ip}/api/compradores/${idUsuario}/compras?${searchParams.toString()}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+};
+// .then((response) => {
+//   return response.data;
+// })
+// .catch((error) => {
+//   return error.response.data.message;
+// });
 
 // export const reclamosHechos = (idUsuario: string, token: string, pageNo: string, pageSize: string, sortBy: string, sortDir: string, filtros: DtFiltoReclamo): Promise<listados> => {
 //     const searchParams = new URLSearchParams();
@@ -201,7 +226,7 @@ type DtChat = {
 // }
 
 export type DtDireccion = {
-  id?: string;
+  id: string;
   calle: string;
   numero: number;
   departamento: string;
@@ -221,3 +246,10 @@ export type DtDireccion = {
 //     descripcion: string,
 //     tipo: TipoReclamo,
 // }
+
+export type DtFiltrosCompras = {
+  fecha?: string;
+  nombreVendedor?: string;
+  nombreProducto?: string;
+  estado?: EstadoCompra;
+};

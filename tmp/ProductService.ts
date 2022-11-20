@@ -1,4 +1,5 @@
 import axios from "axios";
+import { DtDireccion } from "./CompradorService";
 import { ip } from "./UserService";
 
 export const listarProductos = (
@@ -23,7 +24,6 @@ export const listarProductos = (
     searchParams.append("idEventoPromocional", filtros.idEventoPromocional);
   if (filtros?.recibirInfoEventoActivo)
     searchParams.append("infoEventoActivo", "true");
-
   let url = `${ip}/api/productos?${searchParams.toString()}`;
   return axios
     .get(url)
@@ -31,7 +31,6 @@ export const listarProductos = (
       return response.data;
     })
     .catch((error) => {
-      console.log("ERRORRRR", JSON.stringify(error));
       if (!error.response) return "Error de conexion";
       else return error.response.data.message;
     });
@@ -60,7 +59,7 @@ export type DtProducto = {
   nombreVendedor: string;
   calificacion: number;
   imagenDePerfil: string;
-  localesParaRetiro: Direccion[];
+  localesParaRetiro: Direccion[] | DtDireccion[];
   stock: number;
   garantia: number;
 };

@@ -38,6 +38,10 @@ import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 import CheckoutFlowScreen from "../screens/CheckoutFlowScreen";
 import ReviewOrderScreen from "../screens/ReviewOrderScreen";
 import AddressSelectionScreen from "../screens/AddressSelectionScreen";
+import AddCreditCardScreen from "../screens/AddCreditCardScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AddAddressScreen from "../screens/AddAddressScreen";
+import ListAddressScreen from "../screens/ListAddressScreen";
 
 export default function Navigation({
   colorScheme,
@@ -74,6 +78,7 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
+      <Stack.Screen name="AddCard" component={AddCreditCardScreen} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
         <Stack.Screen name="LogOrSign" component={LogOrSign} />
@@ -98,6 +103,8 @@ function RootNavigator() {
           name="AddressSelection"
           component={AddressSelectionScreen}
         />
+        <Stack.Screen name="AddAddress" component={AddAddressScreen} />
+        <Stack.Screen name="ListAddress" component={ListAddressScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -109,82 +116,75 @@ function RootNavigator() {
  */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
+type State = string | null;
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
+  let count = 0;
   // TODO: Cambiar los usestate a otro lado tal vez no se
-  const [state, setState] = useState({ token: "" });
-  const [token, setToken] = useState("");
+  const CheckLogged = async () => {
+    let token = await AsyncStorage.getItem("@token");
+    setToken(token);
+  };
+
+  React.useEffect(() => {
+    CheckLogged();
+    count++;
+  });
+
+  const [token, setToken] = useState(null as State);
 
   return (
     <BottomTab.Navigator
-      initialRouteName="HomeScreen"
+      initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
-      <BottomTab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        // options= {({navigation})}
-        options={({ navigation }: RootTabScreenProps<"HomeScreen">) => ({
-          title: "Home Screen",
-          unmountOnBlur: true,
-
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() =>
-                navigation.navigate("LogOrSign", {
-                  token: token,
-                  setToken: (e) => setToken(e),
-                  // onChangeText={(e) => setState({ ...state, pass: e.valueOf() })}
-                })
-              }
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="user-circle"
-                size={35}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
+      {token && (
+        <BottomTab.Screen
+          name="HomeScreen"
+          // component={HomeScreen}
+          children={(props) => (
+            <HomeScreen
+              reset={count}
+              navigation={props.navigation}
+              route={props.route}
+            />
+          )}
+          options={({ navigation }: RootTabScreenProps<"HomeScreen">) => ({
+            title: "Mis Compras",
+            unmountOnBlur: true,
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="shopping-bag" color={color} />
+            ),
+          })}
+        />
+      )}
 
       <BottomTab.Screen
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
+          title: "Productos",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="shopping-cart" color={color} />
           ),
         })}
       />
+
       <BottomTab.Screen
         name="TabTwo"
-        component={TabTwoScreen}
+        children={(props) => (
+          <TabTwoScreen
+            extraProps={!!token}
+            route={props.route}
+            navigate={props.navigation}
+            CheckLogged={CheckLogged}
+          />
+        )}
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Perfil",
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </BottomTab.Navigator>

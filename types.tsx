@@ -9,6 +9,8 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { DtDireccion } from "./tmp/CompradorService";
+import { Direccion } from "./tmp/ProductService";
 
 declare global {
   namespace ReactNavigation {
@@ -33,7 +35,10 @@ export type RootStackParamList = {
   ProductDetailsScreen: {
     productId: string;
   };
-  SelectCard: { productId: string, canDelivery: boolean};
+  SelectCard: { productId: string; canDelivery: boolean };
+  AddCard: undefined;
+  AddAddress: { edit?: DtDireccion | Direccion };
+  ListAddress: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -46,6 +51,8 @@ export type RootTabParamList = {
     uuid: string;
     setUuid: (v: string) => void;
   };
+  AddCard: undefined;
+  AddAddress: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
@@ -69,7 +76,8 @@ export type CheckoutFlowStack<Screen extends keyof CheckoutFlowList> =
   NativeStackScreenProps<CheckoutFlowList, Screen>;
 
 export type CheckoutFlowList = {
-  SelectCard: { productId: string, canDelivery: boolean};
+  SelectCard: { productId: string; canDelivery: boolean };
+  AddCard: undefined;
   ReviewOrder: {
     productId: string;
     cardLast4: string;

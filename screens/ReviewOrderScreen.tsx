@@ -100,7 +100,6 @@ const ReviewOrderScreen = ({
             onTouchEnd={async () => {
               let token = await AsyncStorage.getItem("@token");
               let uuid = await AsyncStorage.getItem("@uuid");
-              debugger;
               if (!token || !uuid) {
                 setState({ ...state, isLoading: false });
                 Alert.alert(
