@@ -1,37 +1,58 @@
-import HomeScreen from './src/screen/HomeScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import Registrar from './src/screen/Registrar';
-import MisCompras from './src/screen/MisCompras';
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-// Stacks
-const Stack = createNativeStackNavigator();
-
-// Tabbis
-const Tab = createMaterialBottomTabNavigator();
-
+import useCachedResources from "./hooks/useCachedResources";
+import useColorScheme from "./hooks/useColorScheme";
+import Navigation from "./navigation";
+import messaging from "@react-native-firebase/messaging";
+import { Alert } from "react-native";
+import { check, request, PERMISSIONS, RESULTS } from "react-native-permissions";
+import { useEffect } from "react";
 
 export default function App() {
-  return (
+  const isLoadingComplete = useCachedResources();
+  const colorScheme = useColorScheme();
+  useEffect(() => {
+    checkPermissionDenied().then((result) => {
+      if (result) requestPermissions();
+    });
+  }, []);
 
-    <NavigationContainer>
-      {/* <Stack.Navigator>
-        <Stack.Screen name="Home" component= {HomeScreen}/>
-      </Stack.Navigator> */}
-      {/* Como pregunta mas que nada, porque tengo que reiniciar el maldito servidor este aveces si y yaveces no lmao  */}
-      <Tab.Navigator>
-        <Tab.Screen name="home" component={HomeScreen} />
-        {/* TODO: Aca tipo mi idea es poner "mis compras"(pa mostrar las compras y su estado) y llevarlo a registrar de no estar registrado? no se si siquiera podes entrar aca sin estarlo no se, */}
-        {/* <Tab.Screen name="registrar" component={Registrar}/> */}
+  const checkPermissionDenied = async (): Promise<boolean> => {
+    return check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
+      .then((result) => {
+        switch (result) {
+          case RESULTS.GRANTED:
+            return false;
+          default:
+            return true;
+        }
+      })
+      .catch((error) => true);
+  };
+  const requestPermissions = async () => {
+    let result = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS, {
+      title: "Se necesitan permisos de Push Notification",
+      message: "Necesitamos PN para una mejor experiencia",
+      buttonPositive: "OK!",
+      buttonNegative: "NO",
+    });
+  };
+  messaging().onMessage(async (message) => {
+    Alert.alert(
+      message.notification?.title ?? "Nueva Notificacion",
+      message.notification?.body
+    );
+  });
 
-        {/* Por ahora queda asi */}
-        <Tab.Screen name="misCompras" component={MisCompras}/>
-      </Tab.Navigator>
-      <Tab.Screen name="registrarse" component={Registrar}/>
-
-      
-    </NavigationContainer>
-
-  );
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <SafeAreaProvider>
+        <Navigation colorScheme={colorScheme} />
+        <StatusBar />
+      </SafeAreaProvider>
+    );
+  }
 }
