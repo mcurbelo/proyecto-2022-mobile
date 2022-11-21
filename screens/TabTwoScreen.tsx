@@ -5,8 +5,9 @@ import { Button as PaperButton } from "react-native-paper";
 import { Text, View } from "../components/Themed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { iniciarSesion } from "../tmp/UserService";
+import { iniciarSesion, obtenerInformacion } from "../tmp/UserService";
 import messaging from "@react-native-firebase/messaging";
+import UserInfo from "../components/UserInfo";
 
 export default function TabTwoScreen(allProps: any) {
   const [isLogin, setIsLogin] = useState(false);
@@ -14,13 +15,15 @@ export default function TabTwoScreen(allProps: any) {
     mail: "",
     pass: "",
     isError: false,
+    isLoggedIn: false,
   });
-  const nav = useNavigation();
-  React.useEffect(() => {}, []);
 
+  const nav = useNavigation();
   const LogOut = async () => {
     await AsyncStorage.removeItem("@token");
     await AsyncStorage.removeItem("@uuid");
+    await AsyncStorage.removeItem("@userInfo");
+    setLoginState({ mail: "", pass: "", isError: false, isLoggedIn: false });
     allProps.CheckLogged();
   };
 
@@ -37,8 +40,22 @@ export default function TabTwoScreen(allProps: any) {
           await getToken();
           AsyncStorage.setItem("@uuid", v.uuid);
           AsyncStorage.setItem("@token", v.token);
-          setLoginState({ ...loginState, isError: false });
           setIsLogin(false);
+          obtenerInformacion(v.uuid)
+            .then((userInfo) => {
+              console.log(userInfo);
+              if (userInfo.success) return;
+              debugger;
+              AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
+              setLoginState({
+                ...loginState,
+                isError: false,
+                isLoggedIn: true,
+              });
+            })
+            .catch((error) => {
+              debugger;
+            });
           allProps.CheckLogged();
         } else {
           setLoginState({ ...loginState, isError: true });
@@ -92,6 +109,7 @@ export default function TabTwoScreen(allProps: any) {
       )}
       {allProps.extraProps && (
         <>
+          <UserInfo isLoggedIn={loginState.isLoggedIn} />
           <Button
             title="Mis Direcciones"
             onPress={() => nav.navigate("ListAddress")}

@@ -19,7 +19,6 @@ export default function App() {
   }, []);
 
   const checkPermissionDenied = async (): Promise<boolean> => {
-    debugger
     return check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS)
       .then((result) => {
         switch (result) {

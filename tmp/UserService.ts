@@ -98,13 +98,13 @@ export const obtenerInformacion = (
 
 export const updateUser = (datos: UpdateInfo): Promise<UpdateResponse> => {
   return axios
-    .put(`${ip}/api/usuarios/` + datos.uuid + `/infoBasica`, {
+    .put(`${ip}/api/usuarios/${datos.uuid}/infoBasica`, {
       apellido: datos.apellido,
       correo: datos.correo,
       nombre: datos.nombre,
       telefono: datos.telefono,
       imagen: {
-        data: datos.imagen.data,
+        data: datos.imagen?.data,
       },
     })
     .then((response) => {
@@ -155,7 +155,7 @@ export type UpdateInfo = {
   nombre?: string;
   apellido?: string;
   telefono?: string;
-  imagen: {
+  imagen?: {
     data: string;
     nombre?: string;
     tamaño?: 0;
