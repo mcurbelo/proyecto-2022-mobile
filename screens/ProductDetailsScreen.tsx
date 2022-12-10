@@ -26,13 +26,26 @@ const ProductDetailsScreen = ({
       }}
     />
   );
+
+  const getStockColor = (stock: number) => {
+    if (stock > 15) return "#008000";
+    if (stock < 15 && stock > 5) return "#D7D800";
+
+    return "#FF1116";
+  };
+
+  const getStockText = (stock: number) => {
+    if (stock > 15) return "Disponible";
+    if (stock < 15 && stock > 5) return "Medio";
+
+    return "Ultimas unidades";
+  };
   useEffect(() => {
     infoProducto(route.params.productId)
       .then((product) => {
         setState({ isLoading: false, product: product });
       })
       .catch((error) => {
-        console.log(JSON.stringify(error));
       });
   }, []);
   return (
@@ -69,6 +82,18 @@ const ProductDetailsScreen = ({
           </View>
           {separator()}
           <View style={{ flexDirection: "row" }}>
+            <Text>Nombre: </Text>
+            <Text style={{ fontWeight: "bold" }}>{state.product.nombre}</Text>
+          </View>
+          {separator()}
+          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            <Text>Descripcion: </Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {state.product.descripcion}
+            </Text>
+          </View>
+          {separator()}
+          <View style={{ flexDirection: "row" }}>
             <Text>Vendedor: </Text>
             <Text style={{ fontWeight: "bold" }}>
               {state.product.nombreVendedor}
@@ -84,10 +109,30 @@ const ProductDetailsScreen = ({
           </View>
           {separator()}
           <View style={{ flexDirection: "row" }}>
-            <Text>Precio: </Text>
-            <Text style={{fontWeight: "bold"}}>${state.product.precio}</Text>
+            <Text>Stock: </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: getStockColor(state.product.stock),
+              }}
+            >
+              {getStockText(state.product.stock)}
+            </Text>
           </View>
-
+          {separator()}
+          <View style={{ flexDirection: "row" }}>
+            <Text>Precio: </Text>
+            <Text style={{ fontWeight: "bold" }}>${state.product.precio}</Text>
+          </View>
+          {separator()}
+          <View style={{ flexDirection: "row" }}>
+            <Text>Formas de entrega: </Text>
+            <FontAwesome name="home" size={20} />
+            <View style={{ width: 10 }} />
+            {state.product.permiteEnvio && (
+              <FontAwesome name="truck" size={20} />
+            )}
+          </View>
           {separator()}
         </View>
       )}

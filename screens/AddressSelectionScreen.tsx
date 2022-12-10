@@ -173,6 +173,7 @@ const AddressSelectionScreen = ({
               cardLast4: route.params.cardLast4,
               isDelivery: state.isDelivery,
               addressId: state.selectedAddress.id?.toString()!,
+              address: state.selectedAddress
             });
           }}
         />

@@ -36,9 +36,7 @@ const ReviewOrderScreen = ({
       .then((product) => {
         setState({ ...state, isLoading: false, product: product });
       })
-      .catch((error) => {
-        
-      });
+      .catch((error) => {});
   }, []);
   return (
     <SafeAreaView
@@ -75,6 +73,11 @@ const ReviewOrderScreen = ({
             </View>
             {separator()}
             <View style={{ flexDirection: "row" }}>
+              <Text>Producto: </Text>
+              <Text style={{ fontWeight: "bold" }}>{state.product.nombre}</Text>
+            </View>
+            {separator()}
+            <View style={{ flexDirection: "row" }}>
               <Text>Vendedor: </Text>
               <Text style={{ fontWeight: "bold" }}>
                 {state.product.nombreVendedor}
@@ -82,19 +85,48 @@ const ReviewOrderScreen = ({
             </View>
             {separator()}
             <View style={{ flexDirection: "row" }}>
-              <Text>Garantía: </Text>
+              <Text>Precio: </Text>
               <Text style={{ fontWeight: "bold" }}>
-                {state.product.garantia}{" "}
-                {state.product.garantia != 1 ? "días" : "día"}
+                ${state.product.precio}
+              </Text>
+            </View>
+            {separator()}
+            <View style={{ flexDirection: "row" }}>
+              <Text>Forama de Pago: </Text>
+              <Text style={{ fontWeight: "bold" }}>
+                &#x2022;&#x2022;&#x2022;&#x2022;
+                &#x2022;&#x2022;&#x2022;&#x2022;
+                &#x2022;&#x2022;&#x2022;&#x2022; {route.params.cardLast4}
+              </Text>
+            </View>
+            {separator()}
+            <View style={{ flexDirection: "row" }}>
+              <Text>Entrega: </Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {route.params.isDelivery
+                  ? "Envio a domicilio"
+                  : "Retiro en el local"}
+              </Text>
+            </View>
+            {separator()}
+            <View style={{ flexDirection: "row" }}>
+              <Text>Direccion: </Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {route.params.address &&
+                  `${
+                    route.params.address?.calle +
+                    " " +
+                    route.params.address?.numero +
+                    ", " +
+                    route.params.address?.localidad +
+                    ", " +
+                    route.params.address.departamento
+                  }`}
               </Text>
             </View>
             {separator()}
           </View>
 
-          <View style={{ flexDirection: "row", marginVertical: 8 }}>
-            <Text>Realizará esta compra con la tarjeta terminando en: </Text>
-            <Text style={{ fontWeight: "bold" }}>{route.params.cardLast4}</Text>
-          </View>
           <FontAwesome.Button
             name="shopping-cart"
             onTouchEnd={async () => {

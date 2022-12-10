@@ -1,5 +1,6 @@
 import axios from "axios";
 export const ip = "http://10.0.2.2:8080";
+// export const ip = "https://shopnow-backend.rj.r.appspot.com";
 
 export const iniciarSesion = (
   email: string,
@@ -27,6 +28,7 @@ export const iniciarSesion = (
 export const registrarUsuario = (
   datos: RegistrarUsuarioRequest
 ): Promise<IniciarSesionResponse> => {
+  debugger
   return axios
     .post(`${ip}/api/auth/registrarse`, datos)
     .then((response) => {
@@ -44,6 +46,7 @@ export const registrarUsuario = (
       }
     })
     .catch((error) => {
+      console.log(error)
       return { success: false };
     });
 };
@@ -76,10 +79,13 @@ export const reiniciarContrasena = (
 };
 
 export const obtenerInformacion = (
-  uuid: string
+  uuid: string,
+  token: string
 ): Promise<InfoUsuarioResponse> => {
   return axios
-    .get(`${ip}/api/usuarios/` + uuid + `/infoUsuario`)
+    .get(`${ip}/api/usuarios/` + uuid + `/infoUsuario`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
     .then((response) => {
       return {
         nombre: response.data.nombre,
@@ -96,17 +102,28 @@ export const obtenerInformacion = (
     });
 };
 
-export const updateUser = (datos: UpdateInfo): Promise<UpdateResponse> => {
+export const updateUser = (
+  datos: UpdateInfo,
+  token: string
+): Promise<UpdateResponse> => {
   return axios
-    .put(`${ip}/api/usuarios/${datos.uuid}/infoBasica`, {
-      apellido: datos.apellido,
-      correo: datos.correo,
-      nombre: datos.nombre,
-      telefono: datos.telefono,
-      imagen: {
-        data: datos.imagen?.data,
+    .put(
+      `${ip}/api/usuarios/${datos.uuid}/infoBasica`,
+      {
+        apellido: datos.apellido,
+        correo: datos.correo,
+        nombre: datos.nombre,
+        telefono: datos.telefono,
+        imagen: {
+          data: datos.imagen?.data,
+        },
       },
-    })
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
     .then((response) => {
       return {
         success: true,

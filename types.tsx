@@ -30,7 +30,7 @@ export type RootStackParamList = {
   SignScreen: undefined;
   LoginScreen: {
     token: string;
-    setToken: (v: string) => void;
+    // setToken: (v: string) => void;
   };
   ProductDetailsScreen: {
     productId: string;
@@ -84,6 +84,7 @@ export type CheckoutFlowList = {
     cardId: string;
     isDelivery: boolean;
     addressId: string;
+    address?: Direccion | DtDireccion
   };
 
   AddressSelection: {

@@ -8,9 +8,11 @@ import { useNavigation } from "@react-navigation/native";
 import { iniciarSesion, obtenerInformacion } from "../tmp/UserService";
 import messaging from "@react-native-firebase/messaging";
 import UserInfo from "../components/UserInfo";
+import RegisterUser from "../components/Register";
 
 export default function TabTwoScreen(allProps: any) {
   const [isLogin, setIsLogin] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
   const [loginState, setLoginState] = useState({
     mail: "",
     pass: "",
@@ -32,30 +34,45 @@ export default function TabTwoScreen(allProps: any) {
     return fcmToken;
   };
 
+  const fetchInfoUsuario = async (uuid: string, token: string) => {
+    obtenerInformacion(uuid, token)
+      .then((userInfo) => {
+        if (userInfo.success) return;
+        debugger;
+        AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
+        setLoginState({
+          ...loginState,
+          isError: false,
+          isLoggedIn: true,
+        });
+      })
+      .catch((error) => {
+        debugger;
+      });
+  };
   const attemptLogin = async () => {
     let fcmToken = await getToken();
     iniciarSesion(loginState.mail, loginState.pass, fcmToken).then(
       async (v) => {
         if (v.uuid && v.token) {
-          await getToken();
           AsyncStorage.setItem("@uuid", v.uuid);
           AsyncStorage.setItem("@token", v.token);
           setIsLogin(false);
-          obtenerInformacion(v.uuid)
-            .then((userInfo) => {
-              console.log(userInfo);
-              if (userInfo.success) return;
-              debugger;
-              AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
-              setLoginState({
-                ...loginState,
-                isError: false,
-                isLoggedIn: true,
-              });
-            })
-            .catch((error) => {
-              debugger;
-            });
+          await fetchInfoUsuario(v.uuid, v.token)
+          // obtenerInformacion(v.uuid, v.token)
+          //   .then((userInfo) => {
+          //     if (userInfo.success) return;
+          //     debugger;
+          //     AsyncStorage.setItem("@userInfo", JSON.stringify(userInfo));
+          //     setLoginState({
+          //       ...loginState,
+          //       isError: false,
+          //       isLoggedIn: true,
+          //     });
+          //   })
+          //   .catch((error) => {
+          //     debugger;
+          //   });
           allProps.CheckLogged();
         } else {
           setLoginState({ ...loginState, isError: true });
@@ -67,7 +84,27 @@ export default function TabTwoScreen(allProps: any) {
   return (
     <SafeAreaView style={{ height: "100%", padding: 15 }}>
       {!allProps.extraProps && (
-        <Button title="Ingresar" onPress={() => setIsLogin(true)} />
+        <>
+          <Button
+            title="Ingresar"
+            onPress={() => {
+              setIsRegister(false);
+              setIsLogin(true);
+            }}
+          />
+          <View
+            style={{
+              height: 10,
+            }}
+          />
+          <Button
+            title="Registrarse"
+            onPress={() => {
+              setIsLogin(false);
+              setIsRegister(true);
+            }}
+          />
+        </>
       )}
       {isLogin && (
         <View style={{ padding: 24 }}>
@@ -106,6 +143,19 @@ export default function TabTwoScreen(allProps: any) {
             <Text>Ha ocurrido un error. Por favor vuelva a intentarlo</Text>
           )}
         </View>
+      )}
+
+      {isRegister && (
+        <RegisterUser
+          onSuccess={async () => {
+            let token = await AsyncStorage.getItem("@token")
+            let uuid = await AsyncStorage.getItem("@uuid")
+            if(token && uuid) await fetchInfoUsuario(uuid, token)
+            setIsRegister(false);
+            allProps.CheckLogged();
+          }}
+          onFailure={() => {}}
+        />
       )}
       {allProps.extraProps && (
         <>

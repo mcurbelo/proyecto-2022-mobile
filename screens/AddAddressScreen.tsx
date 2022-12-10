@@ -125,6 +125,7 @@ const AddAddressScreen = (props: any) => {
           value={state.numero}
           style={{ marginBottom: 8 }}
           mode="outlined"
+          keyboardType="number-pad"
           label={"Numero"}
           placeholder="1423"
           onChangeText={(e) => setState({ ...state, numero: e.valueOf() })}

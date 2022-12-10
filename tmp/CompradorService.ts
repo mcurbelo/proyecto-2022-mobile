@@ -20,6 +20,16 @@ import { ip } from "./UserService";
 //         },
 //     })
 // }
+
+export const completarEnvio = (
+  idCompra: string,
+  token: string
+): Promise<String> => {
+  return axios.put(`${ip}/api/compras/enviadas/${idCompra}`, undefined, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 export const borrarDireccion = (
   token: string,
   direccion: string

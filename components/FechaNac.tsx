@@ -4,58 +4,50 @@ import { View } from "react-native";
 import { Button } from "react-native-paper";
 
 interface Props {
-  setDate: (e: Date) => void;
-  date: Date;
+  onDateChange?: (date: string) => void;
 }
 
 const FechaNac: FC<Props> = (props) => {
   const [state, setState] = useState({
     date: new Date(),
     show: false,
-    text: "SelectedDate",
+    text: "Seleccionar Fecha",
   });
 
   const today = new Date();
-  
+
   const maxDate = new Date(
-    today.getDate(),
+    today.getFullYear() - 18,
     today.getMonth(),
-    today.getFullYear() - 18
+    today.getDate()
   );
-  const minDate  = new Date(1800,1,1 )
 
   const dateChange = (date: Date | undefined) => {
-    //   onChange?: (event: DateTimePickerEvent, date?: Date) => void;
-    // las fecha es o D o la que ya estaba?
     const currentDate = date!;
-    setState({ ...state, date: currentDate });
     let tmpDate = new Date(currentDate);
     const formDate = `${tmpDate.getDate()}/${
       tmpDate.getMonth() + 1
     }/${tmpDate.getFullYear()}`;
-    setState({ ...state, text: formDate, show: false });
-
-    console.log("fecha" + formDate);
+    setState({ ...state, text: formDate, date: currentDate, show: false });
+    props.onDateChange?.(formDate);
   };
 
   return (
-    <View>
+    <View style={{ marginTop: 10 }}>
       <Button
         mode="outlined"
-        onPress={() => setState({ ...state, show: true })}
+        onPress={() => setState({ ...state, show: !state.show })}
       >
-        {state.text || "Seleccione Fecha"}
+        {state.text}
       </Button>
+
       {state.show && (
         <DateTimePicker
           testID="dateTimePicker"
           value={state.date}
           maximumDate={maxDate}
-          minimumDate={minDate}
           onChange={(e, d) => dateChange(d)}
           mode="date"
-          // TODO: Dejo el spinner porque en android hay que poner un workaround que no tengo ganas de hacer ahora 👍
-          // display="spinner"
         />
       )}
     </View>

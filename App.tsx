@@ -38,12 +38,12 @@ export default function App() {
       buttonNegative: "NO",
     });
   };
-  messaging().onMessage(async (message) => {
-    Alert.alert(
-      message.notification?.title ?? "Nueva Notificacion",
-      message.notification?.body
-    );
-  });
+  // messaging().onMessage(async (message) => {
+  //   Alert.alert(
+  //     message.notification?.title ?? "Nueva Notificacion",
+  //     message.notification?.body
+  //   );
+  // });
 
   if (!isLoadingComplete) {
     return null;

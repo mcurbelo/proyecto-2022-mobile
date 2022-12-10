@@ -38,15 +38,19 @@ const UserInfo = (props: UserInfoProps) => {
 
   const actualizarUsuario = async () => {
     let userId = await AsyncStorage.getItem("@uuid");
-    if (!userId) return;
+    let token = await AsyncStorage.getItem("@token");
+    if (!userId || !token) return;
 
-    updateUser({
-      uuid: userId,
-      nombre: state.nombre,
-      apellido: state.apellido,
-      telefono: state.telefono,
-      correo: state.correo,
-    })
+    updateUser(
+      {
+        uuid: userId,
+        nombre: state.nombre,
+        apellido: state.apellido,
+        telefono: state.telefono,
+        correo: state.correo,
+      },
+      token
+    )
       .then(async (response) => {
         if (response.success) {
           let userInfo = await AsyncStorage.getItem("@userInfo");

@@ -21,7 +21,7 @@ export default function ({
       if (v.uuid && v.token) {
         AsyncStorage.setItem("@uuid", v.uuid);
         AsyncStorage.setItem("@token", v.token);
-        route.params.setToken(v.token);
+        // route.params.setToken(v.token);
         navigation.navigate("Root");
       } else {
         setState({ ...state, isError: true });

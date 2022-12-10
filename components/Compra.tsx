@@ -1,7 +1,16 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  Button,
+  Alert,
+  TouchableHighlight,
+  ActivityIndicator,
+} from "react-native";
 import { DtCompraSlimComprador, EstadoCompra } from "../tmp/ProductService";
-
+import { completarEnvio } from "../tmp/CompradorService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const getEstado = (estado: EstadoCompra): string => {
   if (estado == EstadoCompra.EsperandoConfirmacion)
     return "Esperando Confirmación";
@@ -19,6 +28,26 @@ const separator = () => (
 );
 
 const Compra = (item: DtCompraSlimComprador) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const completarCompra = async (idCompra: string) => {
+    let token = await AsyncStorage.getItem("@token");
+    if (!token) return;
+    setIsLoading(true);
+    completarEnvio(idCompra, token)
+      .then(() => {
+        setIsLoading(false);
+        Alert.alert("Exito!", "Su compra ha sido completada exitosamente");
+      })
+      .catch(() => {
+        setIsLoading(false);
+        Alert.alert(
+          "Error!",
+          "Ha ocurrido un error inesperado, por favor intente mas tarde"
+        );
+      });
+  };
+
   return (
     <View style={{ padding: 15, backgroundColor: "#FFFFFF" }}>
       <View
@@ -63,7 +92,11 @@ const Compra = (item: DtCompraSlimComprador) => {
             resizeMode="cover"
           />
           <View style={{ marginStart: 8 }}>
-            <Text style={{ fontWeight: "bold" }}>{item.nombreProducto}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontWeight: "bold", flex: 1, flexWrap: "wrap" }}>
+                {item.nombreProducto}
+              </Text>
+            </View>
             <Text>{item.nombreVendedor}</Text>
             <View style={{ flexDirection: "row" }}>
               <Text>{item.cantidad}</Text>
@@ -74,6 +107,31 @@ const Compra = (item: DtCompraSlimComprador) => {
           </View>
         </View>
       </View>
+      {item.puedeCompletar && (
+        <TouchableHighlight
+          style={{
+            backgroundColor: "#1890FF",
+            height: 30,
+            borderRadius: 4,
+            marginTop: 8,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={() => {
+            completarCompra(item.idCompra);
+          }}
+        >
+          <>
+            {!isLoading && (
+              <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>
+                MARCAR COMO RECIBIDO
+              </Text>
+            )}
+            <ActivityIndicator animating={isLoading} />
+          </>
+        </TouchableHighlight>
+      )}
     </View>
   );
 };

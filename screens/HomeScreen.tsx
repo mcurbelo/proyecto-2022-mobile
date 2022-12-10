@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import { RootTabScreenProps } from "../types";
+import { useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { listarCompras } from "../tmp/CompradorService";
