@@ -54,24 +54,28 @@ const RegisterUser = (props: RegistrarUsuarioProps) => {
   return (
     <View>
       <TextInput
+        activeOutlineColor="#a8a7a7"
         mode="outlined"
         placeholder="pgomez@shopnow.com"
         label={"Correo"}
         onChangeText={(e) => setState({ ...state, correo: e.valueOf() })}
       />
       <TextInput
+        activeOutlineColor="#a8a7a7"
         mode="outlined"
         placeholder="Pedro"
         label={"Nombre"}
         onChangeText={(e) => setState({ ...state, nombre: e.valueOf() })}
       />
       <TextInput
+        activeOutlineColor="#a8a7a7"
         mode="outlined"
         placeholder="Apellido"
         label={"Gomez"}
         onChangeText={(e) => setState({ ...state, apellido: e.valueOf() })}
       />
       <TextInput
+        activeOutlineColor="#a8a7a7"
         secureTextEntry
         mode="outlined"
         placeholder="******"
@@ -79,6 +83,7 @@ const RegisterUser = (props: RegistrarUsuarioProps) => {
         onChangeText={(e) => setState({ ...state, password: e.valueOf() })}
       />
       <TextInput
+        activeOutlineColor="#a8a7a7"
         secureTextEntry
         mode="outlined"
         placeholder="******"
@@ -88,6 +93,7 @@ const RegisterUser = (props: RegistrarUsuarioProps) => {
         }
       />
       <TextInput
+        activeOutlineColor="#a8a7a7"
         secureTextEntry
         mode="outlined"
         placeholder="099235745"

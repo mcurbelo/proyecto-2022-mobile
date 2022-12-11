@@ -47,6 +47,7 @@ const CrediCardScreen = ({
       {!state.isLoading && (
         <>
           <TextInput
+            activeOutlineColor="#a8a7a7"
             placeholder="4111 1111 1111 1111"
             label={"Numero"}
             maxLength={16}
@@ -57,6 +58,7 @@ const CrediCardScreen = ({
             }
           />
           <TextInput
+            activeOutlineColor="#a8a7a7"
             maxLength={3}
             placeholder="111"
             label={"CVV"}
@@ -67,6 +69,7 @@ const CrediCardScreen = ({
             }
           />
           <TextInput
+            activeOutlineColor="#a8a7a7"
             label={"Vencimiento"}
             placeholder="12/23"
             value={state.ccExpiration ?? ""}

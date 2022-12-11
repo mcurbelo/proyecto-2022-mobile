@@ -109,6 +109,7 @@ export default function TabTwoScreen(allProps: any) {
       {isLogin && (
         <View style={{ padding: 24 }}>
           <TextInput
+            activeOutlineColor="#a8a7a7"
             returnKeyType="next"
             mode="outlined"
             label="Correo"
@@ -120,6 +121,7 @@ export default function TabTwoScreen(allProps: any) {
           />
 
           <TextInput
+            activeOutlineColor="#a8a7a7"
             mode="outlined"
             label="Contraseña"
             placeholder="*********"

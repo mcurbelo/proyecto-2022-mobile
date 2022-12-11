@@ -57,6 +57,7 @@ const CambiarContraseña = ({
     <SafeAreaView style={{ padding: 8, flexDirection: "column" }}>
       {state.isLoading && <ActivityIndicator size={"large"} />}
       <TextInput
+        activeOutlineColor="#a8a7a7"
         disabled={state.isLoading}
         mode="outlined"
         label="Contraseña"
@@ -68,6 +69,7 @@ const CambiarContraseña = ({
         }
       />
       <TextInput
+        activeOutlineColor="#a8a7a7"
         disabled={state.isLoading}
         mode="outlined"
         label="Nueva Contraseña"
@@ -77,6 +79,7 @@ const CambiarContraseña = ({
         onChangeText={(e) => setState({ ...state, newPassword: e.valueOf() })}
       />
       <TextInput
+        activeOutlineColor="#a8a7a7"
         disabled={state.isLoading}
         mode="outlined"
         label="Repetir Nueva Contraseña"

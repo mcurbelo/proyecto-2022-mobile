@@ -27,7 +27,7 @@ const UserInfo = (props: UserInfoProps) => {
     let userId = await AsyncStorage.getItem("@uuid");
     if (!userId || !userInfo) return;
     let userInfoObject = JSON.parse(userInfo);
-    console.log(userInfoObject)
+    console.log(userInfoObject);
     setState({ ...state, id: userId, ...userInfoObject, isEdit: false });
   };
   React.useEffect(() => {
@@ -74,7 +74,7 @@ const UserInfo = (props: UserInfoProps) => {
   return (
     <View style={{ flexDirection: "column", width: "100%" }}>
       {!state.isEdit && (
-        <View style={{marginBottom: 8}}>
+        <View style={{ marginBottom: 8 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Avatar.Image
               source={{
@@ -117,6 +117,7 @@ const UserInfo = (props: UserInfoProps) => {
       {state.isEdit && (
         <View style={{ marginBottom: 20 }}>
           <TextInput
+            activeOutlineColor="#a8a7a7"
             onChangeText={(e) => setState({ ...state, correo: e.valueOf() })}
             label={"Correo"}
             placeholder={state.correo}
@@ -125,6 +126,7 @@ const UserInfo = (props: UserInfoProps) => {
             mode="outlined"
           />
           <TextInput
+            activeOutlineColor="#a8a7a7"
             onChangeText={(e) => setState({ ...state, nombre: e.valueOf() })}
             label={"Nombre"}
             placeholder={state.nombre}
@@ -133,6 +135,7 @@ const UserInfo = (props: UserInfoProps) => {
             mode="outlined"
           />
           <TextInput
+            activeOutlineColor="#a8a7a7"
             onChangeText={(e) => setState({ ...state, apellido: e.valueOf() })}
             label={"Apellido"}
             placeholder={state.apellido}
@@ -141,6 +144,7 @@ const UserInfo = (props: UserInfoProps) => {
             mode="outlined"
           />
           <TextInput
+            activeOutlineColor="#a8a7a7"
             onChangeText={(e) => setState({ ...state, telefono: e.valueOf() })}
             label={"Telefono"}
             keyboardType={"number-pad"}

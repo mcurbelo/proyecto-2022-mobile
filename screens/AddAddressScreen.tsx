@@ -114,6 +114,7 @@ const AddAddressScreen = (props: any) => {
     <Provider>
       <View style={{ padding: 15 }}>
         <TextInput
+          activeOutlineColor="#a8a7a7"
           value={state.calle}
           style={{ marginBottom: 8 }}
           mode="outlined"
@@ -122,6 +123,7 @@ const AddAddressScreen = (props: any) => {
           onChangeText={(e) => setState({ ...state, calle: e.valueOf() })}
         />
         <TextInput
+          activeOutlineColor="#a8a7a7"
           value={state.numero}
           style={{ marginBottom: 8 }}
           mode="outlined"
@@ -131,6 +133,7 @@ const AddAddressScreen = (props: any) => {
           onChangeText={(e) => setState({ ...state, numero: e.valueOf() })}
         />
         <TextInput
+          activeOutlineColor="#a8a7a7"
           value={state.localidad}
           style={{ marginBottom: 8 }}
           mode="outlined"

@@ -147,7 +147,11 @@ const HomeScreen = (allProps: any) => {
 
   return (
     <View>
-      <Modal animationType="slide" visible={state.showModal}>
+      <Modal
+        animationType="slide"
+        visible={state.showModal}
+        onRequestClose={() => setState({ ...state, showModal: false })}
+      >
         <View style={{ padding: 10 }}>
           <View style={{ flexDirection: "row", justifyContent: "center" }}>
             <Text style={{ fontWeight: "bold", fontSize: 25 }}>
@@ -156,6 +160,7 @@ const HomeScreen = (allProps: any) => {
           </View>
           <TextInput
             multiline
+            activeOutlineColor="#a8a7a7"
             placeholder="Este producto ha venido con una falla"
             label={"Descripción"}
             mode="outlined"

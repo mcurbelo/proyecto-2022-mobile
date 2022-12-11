@@ -32,6 +32,7 @@ export default function ({
   return (
     <View style={{ padding: 24 }}>
       <TextInput
+      activeOutlineColor="#a8a7a7"
         returnKeyType="next"
         mode="outlined"
         label="Correo"
@@ -41,6 +42,7 @@ export default function ({
       />
 
       <TextInput
+      activeOutlineColor="#a8a7a7"
         mode="outlined"
         label="Password"
         placeholder="*********"

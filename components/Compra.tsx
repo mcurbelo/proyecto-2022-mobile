@@ -11,7 +11,6 @@ import {
 import { DtCompraSlimComprador, EstadoCompra } from "../tmp/ProductService";
 import { completarEnvio } from "../tmp/CompradorService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Modal } from "react-native-paper";
 const getEstado = (estado: EstadoCompra): string => {
   if (estado == EstadoCompra.EsperandoConfirmacion)
     return "Esperando Confirmación";
@@ -123,6 +122,7 @@ const Compra = (props: CompraProps) => {
       </View>
       {props.item.puedeCompletar && (
         <TouchableHighlight
+          underlayColor={"#283ebd"}
           style={{
             backgroundColor: "#1890FF",
             height: 30,
@@ -148,6 +148,7 @@ const Compra = (props: CompraProps) => {
       )}
       {props.item.puedeReclamar && (
         <TouchableHighlight
+          underlayColor={"#283ebd"}
           style={{
             backgroundColor: "#1890FF",
             height: 30,

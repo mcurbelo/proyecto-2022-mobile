@@ -95,6 +95,7 @@ export default function TabOneScreen({
     <View style={{ height: "100%", backgroundColor: "#f9f9f9" }}>
       <View style={{ height: "100%" }}>
         <TextInput
+        activeOutlineColor="#a8a7a7"
           style={{ marginHorizontal: 8 }}
           placeholder="Buscar producto"
           label={"Buscar"}
