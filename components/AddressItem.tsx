@@ -61,14 +61,14 @@ const AddressItem = (props: AddressItemProps) => {
         <Text>
           {props.address.calle} {props.address.numero}
         </Text>
-        <Text> {props.address.localidad}</Text>
-        <Text> {props.address.departamento}</Text>
+        <Text>{props.address.localidad}</Text>
+        <Text>{props.address.departamento}</Text>
       </View>
       {props.editable && (
         <>
           <FontAwesome
             name="trash"
-            size={16}
+            size={24}
             style={{ marginLeft: "auto" }}
             onPress={() => {
               confirmationAlert();
@@ -79,9 +79,9 @@ const AddressItem = (props: AddressItemProps) => {
               nav.navigate("AddAddress", { edit: props.address });
             }}
             name="pencil"
-            size={16}
+            size={24}
             style={{
-              marginLeft: 16,
+              marginLeft: 32,
             }}
           />
         </>

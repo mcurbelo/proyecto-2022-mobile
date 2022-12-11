@@ -1,6 +1,6 @@
 import axios from "axios";
-export const ip = "http://10.0.2.2:8080";
-// export const ip = "https://shopnow-backend.rj.r.appspot.com";
+// export const ip = "http://10.0.2.2:8080";
+export const ip = "https://shopnow-backend.rj.r.appspot.com";
 
 export const iniciarSesion = (
   email: string,

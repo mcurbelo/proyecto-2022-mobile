@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import { View, Text, Button } from "react-native";
 import { Avatar, TextInput } from "react-native-paper";
+import { AirbnbRating, Rating } from "react-native-ratings";
 import { updateUser } from "../tmp/UserService";
 type UserInfo = {
   id: string;
@@ -73,7 +74,7 @@ const UserInfo = (props: UserInfoProps) => {
   return (
     <View style={{ flexDirection: "column", width: "100%" }}>
       {!state.isEdit && (
-        <View>
+        <View style={{marginBottom: 8}}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Avatar.Image
               source={{
@@ -106,6 +107,11 @@ const UserInfo = (props: UserInfoProps) => {
           <Text style={{ fontSize: 15, marginBottom: 8 }}>
             Telefono: {state.telefono}
           </Text>
+          <AirbnbRating
+            isDisabled={true}
+            showRating={false}
+            defaultRating={state.calificacion}
+          />
         </View>
       )}
       {state.isEdit && (

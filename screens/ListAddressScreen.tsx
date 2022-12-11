@@ -22,7 +22,7 @@ const ListAddressScreen = (props: any) => {
     setState({ ...state, isLoading: true });
     obtenerDirecciones(token)
       .then((response) => {
-        setState({ isLoading: false, isError: false, addresses: response });
+        setState({ isLoading: false, isError: false, addresses: response.filter(item => !item.esLocal) });
       })
       .catch((error) => {
         setState({ ...state, isLoading: false, isError: true });
