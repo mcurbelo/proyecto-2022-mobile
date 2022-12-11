@@ -15,6 +15,7 @@ import { DtCompraSlimComprador, TipoReclamo } from "../tmp/ProductService";
 import Compra from "../components/Compra";
 import DropDownPicker from "react-native-dropdown-picker";
 import { TextInput } from "react-native-paper";
+import { calificar } from "../tmp/CompartidoUsuario";
 
 type State = {
   isError: boolean;
@@ -23,10 +24,15 @@ type State = {
   idCompra: string;
   showModal: boolean;
   descripcionReclamo: string;
+  esCalificar: boolean;
+  idVendedor: string;
 };
 
 const HomeScreen = (allProps: any) => {
-  const [state, setState] = useState({ showModal: false } as State);
+  const [state, setState] = useState({
+    showModal: false,
+    esCalificar: false,
+  } as State);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -63,6 +69,42 @@ const HomeScreen = (allProps: any) => {
     fetchCompras();
   }, [allProps.reset]);
 
+  const enviarCalificacion = async () => {
+    let uuid = await AsyncStorage.getItem("@uuid");
+    let token = await AsyncStorage.getItem("@token");
+    if (!uuid || !token) return;
+    calificar(state.idCompra, token, {
+      puntuacion: 1,
+      comentario: state.descripcionReclamo,
+      autor: uuid,
+    })
+      .then((response) => {
+        Alert.alert("Exito!", "Su calificación ha sido enviada correctamente!");
+        setState({
+          ...state,
+          descripcionReclamo: "",
+          showModal: false,
+          idCompra: "",
+          idVendedor: "",
+          esCalificar: false,
+        });
+      })
+      .catch((response) => {
+        Alert.alert(
+          "Error!",
+          "Ha ocurrido un error inesperado. Por favor intente nuevamente mas tarde."
+        );
+        setState({
+          ...state,
+          descripcionReclamo: "",
+          showModal: false,
+          idCompra: "",
+          idVendedor: "",
+          esCalificar: false,
+        });
+      });
+  };
+
   const enviarReclamo = async () => {
     let uuid = await AsyncStorage.getItem("@uuid");
     let token = await AsyncStorage.getItem("@token");
@@ -78,6 +120,8 @@ const HomeScreen = (allProps: any) => {
           descripcionReclamo: "",
           showModal: false,
           idCompra: "",
+          idVendedor: "",
+          esCalificar: false,
         });
       })
       .catch((error) => {
@@ -89,6 +133,8 @@ const HomeScreen = (allProps: any) => {
           descripcionReclamo: "",
           showModal: false,
           idCompra: "",
+          idVendedor: "",
+          esCalificar: false,
         });
       });
   };
@@ -108,28 +154,52 @@ const HomeScreen = (allProps: any) => {
             }}
           />
 
-          <Text>Motivo del reclamo</Text>
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={reclamosList}
-            setOpen={setOpen}
-            onChangeValue={(value) => setValue(value as string)}
-            setValue={setValue}
-            setItems={setReclamosList}
-            style={{ marginVertical: 8 }}
-          />
+          {!state.esCalificar && (
+            <>
+              <Text>Motivo del reclamo</Text>
+              <DropDownPicker
+                open={open}
+                value={value}
+                items={reclamosList}
+                setOpen={setOpen}
+                onChangeValue={(value) => setValue(value as string)}
+                setValue={setValue}
+                setItems={setReclamosList}
+                style={{ marginVertical: 8 }}
+              />
+            </>
+          )}
+
+          {state.esCalificar && (
+            <>
+              {/* <Rating></Rating> */}
+              <Text>CALIFICAR!</Text>
+            </>
+          )}
 
           <Button
-            title="Enviar reclamo"
+            title="Enviar"
             onPress={() => {
-              enviarReclamo();
+              if (state.esCalificar) {
+                enviarCalificacion();
+              } else {
+                enviarReclamo();
+              }
             }}
           />
           <View style={{ height: 8 }} />
           <Button
             title={"Cancelar"}
-            onPress={() => setState({ ...state, showModal: false })}
+            onPress={() =>
+              setState({
+                ...state,
+                descripcionReclamo: "",
+                showModal: false,
+                idCompra: "",
+                idVendedor: "",
+                esCalificar: false,
+              })
+            }
           />
         </View>
       </Modal>
@@ -143,6 +213,15 @@ const HomeScreen = (allProps: any) => {
               onIniciarReclamo={(idCompra) =>
                 setState({ ...state, idCompra: idCompra, showModal: true })
               }
+              onCalificarVendedor={(idCompra, idVendedor) => {
+                setState({
+                  ...state,
+                  esCalificar: true,
+                  idCompra: idCompra,
+                  idVendedor: idVendedor,
+                  showModal: true,
+                });
+              }}
             />
           )}
         />

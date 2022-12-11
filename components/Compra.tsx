@@ -31,6 +31,7 @@ const separator = () => (
 type CompraProps = {
   item: DtCompraSlimComprador;
   onIniciarReclamo: (idCompra: string) => void;
+  onCalificarVendedor: (idCompra: string, idVendedor: string) => void;
 };
 
 // const Compra = (item: DtCompraSlimComprador, onIniciarReclamo: (idCompra: string) => void) => {
@@ -172,7 +173,17 @@ const Compra = (props: CompraProps) => {
         </TouchableHighlight>
       )}
       {/* TODO Agregar boton de calificar vendedor */}
-      {props.item.puedeCalificar && <></>}
+      {props.item.puedeCalificar && (
+        <Button
+          title="Calificar vendedor"
+          onPress={() => {
+            props.onCalificarVendedor(
+              props.item.idCompra,
+              props.item.idVendedor
+            );
+          }}
+        />
+      )}
     </View>
   );
 };
