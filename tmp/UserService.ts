@@ -1,6 +1,6 @@
 import axios from "axios";
-// export const ip = "http://10.0.2.2:8080";
-export const ip = "https://shopnow-backend.rj.r.appspot.com";
+export const ip = "http://10.0.2.2:8080";
+// export const ip = "https://shopnow-backend.rj.r.appspot.com";
 
 export const iniciarSesion = (
   email: string,
@@ -28,7 +28,7 @@ export const iniciarSesion = (
 export const registrarUsuario = (
   datos: RegistrarUsuarioRequest
 ): Promise<IniciarSesionResponse> => {
-  debugger
+  debugger;
   return axios
     .post(`${ip}/api/auth/registrarse`, datos)
     .then((response) => {
@@ -46,7 +46,7 @@ export const registrarUsuario = (
       }
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
       return { success: false };
     });
 };
@@ -132,6 +132,42 @@ export const updateUser = (
     .catch((error) => {
       return { success: false };
     });
+};
+
+export const updateContrasena = (
+  token: string,
+  idUsuario: string,
+  datos: DtCambioContrasena
+): Promise<UpdateResponse> => {
+  return axios
+    .put(`${ip}/api/usuarios/${idUsuario}/perfil`, datos, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      return {
+        success: true,
+      };
+    })
+    .catch((error) => {
+      if (error.response.status.toString() !== "409") {
+        return {
+          success: false,
+          message: "Error en el servidor",
+        };
+      } else {
+        return {
+          success: false,
+          message: error.response.data.message,
+        };
+      }
+    });
+};
+
+export type DtCambioContrasena = {
+  contrasenaVieja: string;
+  contrasenaNueva: string;
 };
 
 export type RegistrarUsuarioRequest = {

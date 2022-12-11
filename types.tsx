@@ -40,6 +40,7 @@ export type RootStackParamList = {
   AddAddress: { edit?: DtDireccion | Direccion };
   ListAddress: undefined;
   MisReclamos: undefined;
+  CambiarContraseña: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

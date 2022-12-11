@@ -43,6 +43,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AddAddressScreen from "../screens/AddAddressScreen";
 import ListAddressScreen from "../screens/ListAddressScreen";
 import MisReclamos from "../screens/MisReclamos";
+import CambiarContraseña from "../screens/CambiarContraseña";
 
 export default function Navigation({
   colorScheme,
@@ -89,7 +90,8 @@ function RootNavigator() {
           name="ProductDetailsScreen"
           component={ProductDetailsScreen}
         />
-        <Stack.Screen name="MisReclamos" component={MisReclamos}/>
+        <Stack.Screen name="MisReclamos" component={MisReclamos} />
+        <Stack.Screen name="CambiarContraseña" component={CambiarContraseña} />
       </Stack.Group>
 
       <Stack.Group>

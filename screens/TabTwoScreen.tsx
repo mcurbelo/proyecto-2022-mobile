@@ -161,6 +161,11 @@ export default function TabTwoScreen(allProps: any) {
         <>
           <UserInfo isLoggedIn={loginState.isLoggedIn} />
           <Button
+            title="Cambiar contraseña"
+            onPress={() => nav.navigate("CambiarContraseña")}
+          />
+          <View style={{ margin: 8 }} />
+          <Button
             title="Mis Direcciones"
             onPress={() => nav.navigate("ListAddress")}
           />
