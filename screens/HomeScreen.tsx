@@ -44,7 +44,7 @@ const HomeScreen = (allProps: any) => {
     { label: "Desperfecto Producto", value: "DesperfectoProducto" },
     { label: "Repeticion Incoveniente", value: "RepticionIncoveniente" },
     { label: "Producto No Recibido", value: "ProductoNoRecibido" },
-    { label: "Produco Erroneo", value: "ProducoErroneo" },
+    { label: "Producto Erroneo", value: "ProducoErroneo" },
     { label: "Otro", value: "Otro" },
   ]);
 

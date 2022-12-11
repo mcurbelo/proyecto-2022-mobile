@@ -30,7 +30,7 @@ const formatoReclamo = (reclamo: TipoResolucion) => {
     return (
       <Text>
         {"Estado: "}
-        <Text style={{ color: "#28a745", fontWeight: "bold" }}>Devuelto</Text>
+        <Text style={{ color: "#28a745", fontWeight: "bold" }}>Por Chat</Text>
       </Text>
     );
   }
