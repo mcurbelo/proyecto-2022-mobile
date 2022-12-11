@@ -44,7 +44,7 @@ export default function TabOneScreen({
     setState({ ...state, isLoading: true });
     listarProductos(
       pageNumber.toString(),
-      "3",
+      "10",
       undefined,
       undefined,
       filtros

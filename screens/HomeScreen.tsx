@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Button,
   FlatList,
@@ -29,6 +30,7 @@ type State = {
   esCalificar: boolean;
   idVendedor: string;
   calificacion: number;
+  isLoading: boolean;
 };
 
 const HomeScreen = (allProps: any) => {
@@ -36,6 +38,7 @@ const HomeScreen = (allProps: any) => {
     showModal: false,
     esCalificar: false,
     calificacion: 3,
+    isLoading: false,
   } as State);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -49,6 +52,7 @@ const HomeScreen = (allProps: any) => {
   ]);
 
   const fetchCompras = async () => {
+    setState({ ...state, isLoading: true });
     let token = await AsyncStorage.getItem("@token");
     let uuid = await AsyncStorage.getItem("@uuid");
     if (!token || !uuid) return;
@@ -56,17 +60,18 @@ const HomeScreen = (allProps: any) => {
     listarCompras(uuid!, token!, "0", "100")
       .then((response) => {
         if (response.data.compras.length == 0) {
-          setState({ ...state, isEmpty: true });
+          setState({ ...state, isEmpty: true, isLoading: false });
           return;
         }
         setState({
           ...state,
           isError: false,
           compras: response.data.compras.reverse(),
+          isLoading: false,
         });
       })
       .catch((error) => {
-        setState({ ...state, isError: true });
+        setState({ ...state, isError: true, isLoading: false });
       });
   };
   React.useEffect(() => {
@@ -147,6 +152,7 @@ const HomeScreen = (allProps: any) => {
 
   return (
     <View>
+      {state.isLoading && <ActivityIndicator size={"large"} />}
       <Modal
         animationType="slide"
         visible={state.showModal}

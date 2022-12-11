@@ -46,7 +46,6 @@ export const registrarUsuario = (
       }
     })
     .catch((error) => {
-      console.log(error);
       return { success: false };
     });
 };

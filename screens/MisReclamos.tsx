@@ -33,7 +33,6 @@ const MisReclamos = ({
         navigation.pop();
       })
       .catch((error) => {
-        console.log(error)
         Alert.alert(
           "Error!",
           "Ha ocurrido un error inesperado. Por favor intente mas tarde."

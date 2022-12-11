@@ -29,8 +29,6 @@ const SignScreen = ({ navigation }: RootStackScreenProps<"SignScreen">) => {
         if (response.success && response.token && response.uuid) {
           // TODO: SAVE SHIT
 
-          // console.log(response.token);
-          // console.log(response.uuid);
           AsyncStorage.setItem("@uuid", response.uuid);
           AsyncStorage.setItem("@token", response.token);
 
@@ -38,11 +36,9 @@ const SignScreen = ({ navigation }: RootStackScreenProps<"SignScreen">) => {
         } else {
           // TODO: SHOW ERROR
 
-          console.log(response.error);
         }
       })
       .catch((e) => {
-        console.log(JSON.stringify(e));
       });
   }
   return (

@@ -27,7 +27,6 @@ const UserInfo = (props: UserInfoProps) => {
     let userId = await AsyncStorage.getItem("@uuid");
     if (!userId || !userInfo) return;
     let userInfoObject = JSON.parse(userInfo);
-    console.log(userInfoObject);
     setState({ ...state, id: userId, ...userInfoObject, isEdit: false });
   };
   React.useEffect(() => {

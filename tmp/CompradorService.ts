@@ -234,9 +234,7 @@ export const marcarReclamoResuelto = (
   idCompra: string,
   idReclamo: string
 ): Promise<String> => {
-  console.log(
-    `${ip}/api/compradores/${idUsuario}/compras/${idCompra}/reclamos/${idReclamo}`
-  );
+  
   return axios.put(
     `${ip}/api/compradores/${idUsuario}/compras/${idCompra}/reclamos/${idReclamo}`,
     undefined,

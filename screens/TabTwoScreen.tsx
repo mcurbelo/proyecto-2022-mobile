@@ -131,15 +131,12 @@ export default function TabTwoScreen(allProps: any) {
               setLoginState({ ...loginState, pass: e.valueOf() })
             }
           />
-
-          <PaperButton
-            style={{ marginTop: 8, marginBottom: 8 }}
-            mode="contained"
+          <View style={{ margin: 8 }} />
+          <Button
+            title="Ingresar"
             disabled={!(loginState.mail != "" && loginState.pass != "")}
             onPress={() => attemptLogin()}
-          >
-            Ingresar
-          </PaperButton>
+          />
 
           {loginState.isError && (
             <Text>Ha ocurrido un error. Por favor vuelva a intentarlo</Text>
