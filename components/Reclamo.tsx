@@ -41,8 +41,8 @@ const formatoMotivo = (motivo: TipoReclamo) => {
     return "Desperfecto en el producto";
   if (motivo == TipoReclamo.Otro) return "Otro";
   if (motivo == TipoReclamo.ProducoErroneo) return "Producto Erroneo";
-  if (motivo == TipoReclamo.ProductoNoRecibido) "Producto No Recibido";
-  if (motivo == TipoReclamo.RepticionIncoveniente) "Repetido";
+  if (motivo == TipoReclamo.ProductoNoRecibido) return "Producto No Recibido";
+  if (motivo == TipoReclamo.RepticionIncoveniente) return "Repetición del inconveniente";
 };
 
 const Reclamo = (props: ReclamoProps) => {
