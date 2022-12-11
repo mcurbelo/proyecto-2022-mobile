@@ -1,18 +1,43 @@
 import { useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Button,
+  FlatList,
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { listarCompras } from "../tmp/CompradorService";
-import { DtCompraSlimComprador } from "../tmp/ProductService";
+import { listarCompras, nuevoReclamo } from "../tmp/CompradorService";
+import { DtCompraSlimComprador, TipoReclamo } from "../tmp/ProductService";
 import Compra from "../components/Compra";
+import DropDownPicker from "react-native-dropdown-picker";
+import { TextInput } from "react-native-paper";
 
 type State = {
   isError: boolean;
   compras?: DtCompraSlimComprador[];
   isEmpty: boolean;
+  idCompra: string;
+  showModal: boolean;
+  descripcionReclamo: string;
 };
+
 const HomeScreen = (allProps: any) => {
-  const [state, setState] = useState({} as State);
+  const [state, setState] = useState({ showModal: false } as State);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+
+  const [reclamosList, setReclamosList] = useState([
+    { label: "Desperfecto Producto", value: "DesperfectoProducto" },
+    { label: "Repeticion Incoveniente", value: "RepticionIncoveniente" },
+    { label: "Producto No Recibido", value: "ProductoNoRecibido" },
+    { label: "Produco Erroneo", value: "ProducoErroneo" },
+    { label: "Otro", value: "Otro" },
+  ]);
+
   const fetchCompras = async () => {
     let token = await AsyncStorage.getItem("@token");
     let uuid = await AsyncStorage.getItem("@uuid");
@@ -38,12 +63,88 @@ const HomeScreen = (allProps: any) => {
     fetchCompras();
   }, [allProps.reset]);
 
+  const enviarReclamo = async () => {
+    let uuid = await AsyncStorage.getItem("@uuid");
+    let token = await AsyncStorage.getItem("@token");
+    if (!uuid || !token) return;
+    nuevoReclamo(uuid, token, state.idCompra, {
+      descripcion: state.descripcionReclamo,
+      tipo: value as TipoReclamo,
+    })
+      .then((response) => {
+        Alert.alert("Su reclamo ha sido registrado de forma existosa!");
+        setState({
+          ...state,
+          descripcionReclamo: "",
+          showModal: false,
+          idCompra: "",
+        });
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Ha ocurrido un error al intentar procesar su reclamo. Por favor intente mas tarde"
+        );
+        setState({
+          ...state,
+          descripcionReclamo: "",
+          showModal: false,
+          idCompra: "",
+        });
+      });
+  };
+
   return (
     <View>
+      <Modal animationType="slide" visible={state.showModal}>
+        <View style={{ padding: 10 }}>
+          <Text>Esto es un modal. ID: {state.idCompra}</Text>
+          <Text>Descripción</Text>
+          <TextInput // TODO Cambiar color focus
+            multiline
+            style={{ marginVertical: 8 }}
+            value={state.descripcionReclamo}
+            onChangeText={(e) => {
+              setState({ ...state, descripcionReclamo: e });
+            }}
+          />
+
+          <Text>Motivo del reclamo</Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={reclamosList}
+            setOpen={setOpen}
+            onChangeValue={(value) => setValue(value as string)}
+            setValue={setValue}
+            setItems={setReclamosList}
+            style={{ marginVertical: 8 }}
+          />
+
+          <Button
+            title="Enviar reclamo"
+            onPress={() => {
+              enviarReclamo();
+            }}
+          />
+          <View style={{ height: 8 }} />
+          <Button
+            title={"Cancelar"}
+            onPress={() => setState({ ...state, showModal: false })}
+          />
+        </View>
+      </Modal>
+
       {!state.isError && !state.isEmpty && (
         <FlatList
           data={state.compras}
-          renderItem={(compra) => <Compra {...compra.item} />}
+          renderItem={(compra) => (
+            <Compra
+              item={compra.item as DtCompraSlimComprador}
+              onIniciarReclamo={(idCompra) =>
+                setState({ ...state, idCompra: idCompra, showModal: true })
+              }
+            />
+          )}
         />
       )}
 

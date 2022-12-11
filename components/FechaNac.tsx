@@ -11,7 +11,7 @@ const FechaNac: FC<Props> = (props) => {
   const [state, setState] = useState({
     date: new Date(),
     show: false,
-    text: "Seleccionar Fecha",
+    text: "Fecha de Nacimiento",
   });
 
   const today = new Date();

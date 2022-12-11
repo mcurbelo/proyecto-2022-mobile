@@ -1,12 +1,14 @@
 import { RootStackScreenProps } from "../types";
-import { FlatList, SafeAreaView, Text, Image, View } from "react-native";
+import { FlatList, SafeAreaView, Text, Image, View, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import { infoProducto, DtProducto } from "../tmp/ProductService";
 import { FontAwesome } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ProductDetailsState = {
   isLoading: boolean;
   product: DtProducto;
+  buttonDisabled: boolean;
 };
 const ProductDetailsScreen = ({
   navigation,
@@ -43,10 +45,9 @@ const ProductDetailsScreen = ({
   useEffect(() => {
     infoProducto(route.params.productId)
       .then((product) => {
-        setState({ isLoading: false, product: product });
+        setState({ ...state, isLoading: false, product: product });
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   }, []);
   return (
     <SafeAreaView
@@ -139,12 +140,21 @@ const ProductDetailsScreen = ({
 
       <FontAwesome.Button
         name="shopping-cart"
-        onTouchEnd={() =>
-          navigation.navigate("SelectCard", {
-            productId: state.product.idProducto,
-            canDelivery: state.product.permiteEnvio,
-          })
-        }
+        onTouchEnd={async () => {
+          let token = await AsyncStorage.getItem("@token");
+          let uuid = await AsyncStorage.getItem("@uuid")
+          if(uuid && token) {
+            navigation.navigate("SelectCard", {
+              productId: state.product.idProducto,
+              canDelivery: state.product.permiteEnvio,
+            });
+          } else {
+            Alert.alert(
+              "No ha iniciado sesión",
+              "Debe iniciar sesión para poder comprar productos"
+            )
+          }
+        }}
       >
         Comprar
       </FontAwesome.Button>

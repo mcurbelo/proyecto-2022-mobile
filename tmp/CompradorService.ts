@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EstadoCompra, listados } from "./ProductService";
+import { EstadoCompra, listados, TipoResolucion } from "./ProductService";
 import { ip } from "./UserService";
 // import { DtAltaProducto, DtFiltoReclamo, EstadoCompra, listados, TipoReclamo } from "./VendedorService"
 
@@ -160,45 +160,95 @@ export const listarCompras = (
 //   return error.response.data.message;
 // });
 
-// export const reclamosHechos = (idUsuario: string, token: string, pageNo: string, pageSize: string, sortBy: string, sortDir: string, filtros: DtFiltoReclamo): Promise<listados> => {
-//     const searchParams = new URLSearchParams();
-//     if (pageNo != "") searchParams.append("pageNo", pageNo);
-//     if (pageSize != "") searchParams.append("pageSize", pageSize);
-//     if (sortBy != "") searchParams.append("sortBy", sortBy);
-//     if (sortDir != "") searchParams.append("sortDir", sortDir);
-//     if (filtros.resolucion != undefined) searchParams.append("resolucion", filtros.resolucion.toString());
-//     if (filtros.tipo != undefined) searchParams.append("tipo", filtros.tipo.toString());
-//     if (filtros.fecha != undefined) searchParams.append("fecha", filtros.fecha);
-//     if (filtros.nombreProducto != undefined) searchParams.append("nombreProducto", filtros.nombreProducto);
-//     if (filtros.nombreUsuario != undefined) searchParams.append("nombreUsuario", filtros.nombreUsuario);
-//     return axios.get(`${ip}/api/compradores/${idUsuario}/compras/reclamos?${searchParams.toString()}`, {
-//     }).then((response) => {
-//         return response.data;
-//     })
-//         .catch((error) => {
-//             return error.response.data.message;
-//         })
-// }
+export type DtFiltoReclamo = {
+  fecha?: string;
+  nombreProducto?: string;
+  nombreUsuario?: string;
+  tipo?: TipoReclamo;
+  resolucion?: TipoResolucion;
+};
 
-// export const nuevoReclamo = (idUsuario: string, token: string, idCompra: string, datos: DtAltaReclamo): Promise<String> => {
-//     return axios.post(`${ip}/api/compradores/${idUsuario}/compras/${idCompra}/reclamos`, datos, {
-//     }).then((response) => {
-//         return response.status.toString();
-//     })
-//         .catch((error) => {
-//             return error.response.data.message;
-//         })
-// }
+export const reclamosHechos = (
+  idUsuario: string,
+  token: string,
+  pageNo: string,
+  pageSize: string = "10",
+  sortBy: string = "",
+  sortDir: string = "",
+  filtros: DtFiltoReclamo = {}
+): Promise<listados> => {
+  const searchParams = new URLSearchParams();
+  if (pageNo != "") searchParams.append("pageNo", pageNo);
+  if (pageSize != "") searchParams.append("pageSize", pageSize);
+  if (sortBy != "") searchParams.append("sortBy", sortBy);
+  if (sortDir != "") searchParams.append("sortDir", sortDir);
+  if (filtros.resolucion != undefined)
+    searchParams.append("resolucion", filtros.resolucion.toString());
+  if (filtros.tipo != undefined)
+    searchParams.append("tipo", filtros.tipo.toString());
+  if (filtros.fecha != undefined) searchParams.append("fecha", filtros.fecha);
+  if (filtros.nombreProducto != undefined)
+    searchParams.append("nombreProducto", filtros.nombreProducto);
+  if (filtros.nombreUsuario != undefined)
+    searchParams.append("nombreUsuario", filtros.nombreUsuario);
+  return axios.get(
+    `${ip}/api/compradores/${idUsuario}/compras/reclamos?${searchParams.toString()}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  // .then((response) => {
+  //   return response.data;
+  // })
+  // .catch((error) => {
+  //   return error.response.data.message;
+  // });
+};
 
-// export const marcarReclamoResuelto = (idUsuario: string, token: string, idCompra: string, idReclamo: string): Promise<String> => {
-//     return axios.put(`${ip}/api/compradores/${idUsuario}/compras/${idCompra}/reclamos/${idReclamo}`, {
-//     }).then((response) => {
-//         return response.status.toString();
-//     })
-//         .catch((error) => {
-//             return error.response.data.message;
-//         })
-// }
+export const nuevoReclamo = (
+  idUsuario: string,
+  token: string,
+  idCompra: string,
+  datos: DtAltaReclamo
+): Promise<String> => {
+  return axios.post(
+    `${ip}/api/compradores/${idUsuario}/compras/${idCompra}/reclamos`,
+    datos,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+};
+export declare type DtAltaReclamo = {
+  descripcion: string;
+  tipo: TipoReclamo;
+};
+
+export declare enum TipoReclamo {
+  DesperfectoProducto = "DesperfectoProducto",
+  RepticionIncoveniente = "RepticionIncoveniente",
+  ProductoNoRecibido = "ProductoNoRecibido",
+  ProducoErroneo = "ProducoErroneo",
+  Otro = "Otro",
+}
+
+export const marcarReclamoResuelto = (
+  idUsuario: string,
+  token: string,
+  idCompra: string,
+  idReclamo: string
+): Promise<String> => {
+  console.log(
+    `${ip}/api/compradores/${idUsuario}/compras/${idCompra}/reclamos/${idReclamo}`
+  );
+  return axios.put(
+    `${ip}/api/compradores/${idUsuario}/compras/${idCompra}/reclamos/${idReclamo}`,
+    undefined,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  // .then((response) => {
+  //   return response.status.toString();
+  // })
+  // .catch((error) => {
+  //   return error.response.data.message;
+  // });
+};
 
 // export const obtenerChat = (idcompra: string): Promise<String> => {
 //     return axios.get(`${ip}/api/compras/chat/${idcompra}`).then((response) =>{

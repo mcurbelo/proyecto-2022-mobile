@@ -35,7 +35,7 @@ export default function ({
         returnKeyType="next"
         mode="outlined"
         label="Correo"
-        placeholder="pgonzales@shopit.com"
+        placeholder="pgonzales@shopnow.com"
         value={state.mail}
         onChangeText={(e) => setState({ ...state, mail: e.valueOf() })}
       />

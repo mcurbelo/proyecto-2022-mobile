@@ -160,9 +160,7 @@ const ReviewOrderScreen = ({
                       "Exito!",
                       "Su compra ha sido realizada con exito!"
                     );
-                    setTimeout(() => {
-                      navigation.navigate("Root");
-                    }, 1500);
+                    navigation.navigate("Root");
                   })
                   .catch((error) => {
                     setState({ ...state, isLoading: false });

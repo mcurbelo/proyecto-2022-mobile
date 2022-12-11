@@ -39,6 +39,7 @@ export type RootStackParamList = {
   AddCard: undefined;
   AddAddress: { edit?: DtDireccion | Direccion };
   ListAddress: undefined;
+  MisReclamos: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

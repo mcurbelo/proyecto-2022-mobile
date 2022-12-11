@@ -58,7 +58,7 @@ export default function TabTwoScreen(allProps: any) {
           AsyncStorage.setItem("@uuid", v.uuid);
           AsyncStorage.setItem("@token", v.token);
           setIsLogin(false);
-          await fetchInfoUsuario(v.uuid, v.token)
+          await fetchInfoUsuario(v.uuid, v.token);
           // obtenerInformacion(v.uuid, v.token)
           //   .then((userInfo) => {
           //     if (userInfo.success) return;
@@ -112,7 +112,7 @@ export default function TabTwoScreen(allProps: any) {
             returnKeyType="next"
             mode="outlined"
             label="Correo"
-            placeholder="pgonzales@shopit.com"
+            placeholder="pgonzales@shopnow.com"
             value={loginState.mail}
             onChangeText={(e) =>
               setLoginState({ ...loginState, mail: e.valueOf() })
@@ -121,7 +121,7 @@ export default function TabTwoScreen(allProps: any) {
 
           <TextInput
             mode="outlined"
-            label="Password"
+            label="Contraseña"
             placeholder="*********"
             value={loginState.pass}
             secureTextEntry={true}
@@ -148,9 +148,9 @@ export default function TabTwoScreen(allProps: any) {
       {isRegister && (
         <RegisterUser
           onSuccess={async () => {
-            let token = await AsyncStorage.getItem("@token")
-            let uuid = await AsyncStorage.getItem("@uuid")
-            if(token && uuid) await fetchInfoUsuario(uuid, token)
+            let token = await AsyncStorage.getItem("@token");
+            let uuid = await AsyncStorage.getItem("@uuid");
+            if (token && uuid) await fetchInfoUsuario(uuid, token);
             setIsRegister(false);
             allProps.CheckLogged();
           }}
@@ -169,6 +169,13 @@ export default function TabTwoScreen(allProps: any) {
             title="Agregar Método de Pago"
             onPress={() => nav.navigate("AddCard")}
           />
+          <View style={{ margin: 8 }} />
+
+          <Button
+            title="Mis Reclamos"
+            onPress={() => nav.navigate("MisReclamos")}
+          />
+
           <View style={{ margin: 8 }} />
           <Button title="Salir" onPress={() => LogOut()} />
         </>

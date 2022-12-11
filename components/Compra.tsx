@@ -11,6 +11,7 @@ import {
 import { DtCompraSlimComprador, EstadoCompra } from "../tmp/ProductService";
 import { completarEnvio } from "../tmp/CompradorService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Modal } from "react-native-paper";
 const getEstado = (estado: EstadoCompra): string => {
   if (estado == EstadoCompra.EsperandoConfirmacion)
     return "Esperando Confirmación";
@@ -27,7 +28,13 @@ const separator = () => (
   />
 );
 
-const Compra = (item: DtCompraSlimComprador) => {
+type CompraProps = {
+  item: DtCompraSlimComprador;
+  onIniciarReclamo: (idCompra: string) => void;
+};
+
+// const Compra = (item: DtCompraSlimComprador, onIniciarReclamo: (idCompra: string) => void) => {
+const Compra = (props: CompraProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const completarCompra = async (idCompra: string) => {
@@ -48,6 +55,10 @@ const Compra = (item: DtCompraSlimComprador) => {
       });
   };
 
+  // const iniciarReclamo = async (idCompra: string) => {
+  //   setShowModal(true)
+  // };
+
   return (
     <View style={{ padding: 15, backgroundColor: "#FFFFFF" }}>
       <View
@@ -61,17 +72,19 @@ const Compra = (item: DtCompraSlimComprador) => {
       >
         <View style={{ flexDirection: "row" }}>
           <Text style={{ fontSize: 13, fontStyle: "italic" }}>
-            {item.fecha.toString()}
+            {props.item.fecha.toString()}
           </Text>
           <Text
             style={{
               marginLeft: "auto",
               color:
-                item.estadoCompra != EstadoCompra.Cancelada ? "green" : "red",
+                props.item.estadoCompra != EstadoCompra.Cancelada
+                  ? "green"
+                  : "red",
               fontWeight: "bold",
             }}
           >
-            {getEstado(item.estadoCompra)}
+            {getEstado(props.item.estadoCompra)}
           </Text>
         </View>
         {separator()}
@@ -82,7 +95,7 @@ const Compra = (item: DtCompraSlimComprador) => {
           }}
         >
           <Image
-            source={{ uri: item.imagenURL }}
+            source={{ uri: props.item.imagenURL }}
             style={{
               width: 80,
               height: 80,
@@ -94,20 +107,20 @@ const Compra = (item: DtCompraSlimComprador) => {
           <View style={{ marginStart: 8 }}>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontWeight: "bold", flex: 1, flexWrap: "wrap" }}>
-                {item.nombreProducto}
+                {props.item.nombreProducto}
               </Text>
             </View>
-            <Text>{item.nombreVendedor}</Text>
+            <Text>{props.item.nombreVendedor}</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text>{item.cantidad}</Text>
+              <Text>{props.item.cantidad}</Text>
               <Text>{" x "}</Text>
-              <Text>${item.montoUnitario}</Text>
+              <Text>${props.item.montoUnitario}</Text>
             </View>
-            <Text>Total: ${item.montoTotal}</Text>
+            <Text>Total: ${props.item.montoTotal}</Text>
           </View>
         </View>
       </View>
-      {item.puedeCompletar && (
+      {props.item.puedeCompletar && (
         <TouchableHighlight
           style={{
             backgroundColor: "#1890FF",
@@ -119,7 +132,7 @@ const Compra = (item: DtCompraSlimComprador) => {
             alignItems: "center",
           }}
           onPress={() => {
-            completarCompra(item.idCompra);
+            completarCompra(props.item.idCompra);
           }}
         >
           <>
@@ -132,6 +145,34 @@ const Compra = (item: DtCompraSlimComprador) => {
           </>
         </TouchableHighlight>
       )}
+      {props.item.puedeReclamar && (
+        <TouchableHighlight
+          style={{
+            backgroundColor: "#1890FF",
+            height: 30,
+            borderRadius: 4,
+            marginTop: 8,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={() => {
+            // iniciarReclamo(item.idCompra);
+            props.onIniciarReclamo(props.item.idCompra);
+          }}
+        >
+          <>
+            {!isLoading && (
+              <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>
+                INICIAR RECLAMO
+              </Text>
+            )}
+            {/* <ActivityIndicator animating={isLoading} /> */}
+          </>
+        </TouchableHighlight>
+      )}
+      {/* TODO Agregar boton de calificar vendedor */}
+      {props.item.puedeCalificar && <></>}
     </View>
   );
 };
