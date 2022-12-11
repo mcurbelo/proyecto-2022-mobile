@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
+  // TextInput
 } from "react-native";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -148,10 +149,16 @@ const HomeScreen = (allProps: any) => {
     <View>
       <Modal animationType="slide" visible={state.showModal}>
         <View style={{ padding: 10 }}>
-          <Text>Esto es un modal. ID: {state.idCompra}</Text>
-          <Text>Descripción</Text>
-          <TextInput // TODO Cambiar color focus
+          <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+              Inciar un reclamo
+            </Text>
+          </View>
+          <TextInput
             multiline
+            placeholder="Este producto ha venido con una falla"
+            label={"Descripción"}
+            mode="outlined"
             style={{ marginVertical: 8 }}
             value={state.descripcionReclamo}
             onChangeText={(e) => {
@@ -163,6 +170,7 @@ const HomeScreen = (allProps: any) => {
             <>
               <Text>Motivo del reclamo</Text>
               <DropDownPicker
+                placeholder="Seleccione una opción"
                 open={open}
                 value={value}
                 items={reclamosList}

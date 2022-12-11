@@ -139,6 +139,7 @@ const AddAddressScreen = (props: any) => {
           onChangeText={(e) => setState({ ...state, localidad: e.valueOf() })}
         />
         <DropDownPicker
+          placeholder="Departamento"
           open={open}
           value={value}
           items={departmentList}
