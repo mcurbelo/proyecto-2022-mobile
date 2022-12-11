@@ -16,6 +16,7 @@ import Compra from "../components/Compra";
 import DropDownPicker from "react-native-dropdown-picker";
 import { TextInput } from "react-native-paper";
 import { calificar } from "../tmp/CompartidoUsuario";
+import { AirbnbRating } from "react-native-ratings";
 
 type State = {
   isError: boolean;
@@ -26,12 +27,14 @@ type State = {
   descripcionReclamo: string;
   esCalificar: boolean;
   idVendedor: string;
+  calificacion: number;
 };
 
 const HomeScreen = (allProps: any) => {
   const [state, setState] = useState({
     showModal: false,
     esCalificar: false,
+    calificacion: 3,
   } as State);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -74,7 +77,7 @@ const HomeScreen = (allProps: any) => {
     let token = await AsyncStorage.getItem("@token");
     if (!uuid || !token) return;
     calificar(state.idCompra, token, {
-      puntuacion: 1,
+      puntuacion: state.calificacion,
       comentario: state.descripcionReclamo,
       autor: uuid,
     })
@@ -87,6 +90,7 @@ const HomeScreen = (allProps: any) => {
           idCompra: "",
           idVendedor: "",
           esCalificar: false,
+          calificacion: 3,
         });
       })
       .catch((response) => {
@@ -101,6 +105,7 @@ const HomeScreen = (allProps: any) => {
           idCompra: "",
           idVendedor: "",
           esCalificar: false,
+          calificacion: 3,
         });
       });
   };
@@ -172,8 +177,12 @@ const HomeScreen = (allProps: any) => {
 
           {state.esCalificar && (
             <>
-              {/* <Rating></Rating> */}
-              <Text>CALIFICAR!</Text>
+              <AirbnbRating
+                reviews={["1", "2", "3", "4", "5"]}
+                onFinishRating={(rating) => {
+                  setState({ ...state, calificacion: rating });
+                }}
+              />
             </>
           )}
 
