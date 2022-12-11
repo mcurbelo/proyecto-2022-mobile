@@ -11,7 +11,7 @@ type UserInfo = {
   apellido: string;
   correo: string;
   telefono: string;
-  imagein: string;
+  imagen: string;
   calificacion: number;
   isEdit: boolean;
 };
@@ -26,8 +26,8 @@ const UserInfo = (props: UserInfoProps) => {
     let userInfo = await AsyncStorage.getItem("@userInfo");
     let userId = await AsyncStorage.getItem("@uuid");
     if (!userId || !userInfo) return;
-    debugger;
     let userInfoObject = JSON.parse(userInfo);
+    console.log(userInfoObject)
     setState({ ...state, id: userId, ...userInfoObject, isEdit: false });
   };
   React.useEffect(() => {
@@ -79,8 +79,8 @@ const UserInfo = (props: UserInfoProps) => {
             <Avatar.Image
               source={{
                 uri:
-                  state.imagein && state.imagein != ""
-                    ? state.imagein
+                  state.imagen && state.imagen != ""
+                    ? state.imagen
                     : "https://www.pngkey.com/png/detail/114-1149847_avatar-unknown-dp.png",
               }}
             />

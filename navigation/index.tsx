@@ -80,7 +80,11 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Screen name="AddCard" component={AddCreditCardScreen} />
+      <Stack.Screen
+        name="AddCard"
+        component={AddCreditCardScreen}
+        options={{ title: "Agregar Tarjeta De Credito" }}
+      />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
         <Stack.Screen name="LogOrSign" component={LogOrSign} />
@@ -89,26 +93,46 @@ function RootNavigator() {
         <Stack.Screen
           name="ProductDetailsScreen"
           component={ProductDetailsScreen}
+          options={{ title: "Detalles De Producto" }}
         />
-        <Stack.Screen name="MisReclamos" component={MisReclamos} />
-        <Stack.Screen name="CambiarContraseña" component={CambiarContraseña} />
+        <Stack.Screen
+          name="MisReclamos"
+          component={MisReclamos}
+          options={{ title: "Mis Reclamos" }}
+        />
+        <Stack.Screen
+          name="CambiarContraseña"
+          component={CambiarContraseña}
+          options={{ title: "Cambiar Contraseña" }}
+        />
       </Stack.Group>
 
       <Stack.Group>
         <CheckoutStack.Screen
           name="SelectCard"
           component={CheckoutFlowScreen}
+          options={{ title: "Seleccionar Tarjeta" }}
         />
         <CheckoutStack.Screen
           name="ReviewOrder"
           component={ReviewOrderScreen}
+          options={{ title: "Revisar Orden" }}
         />
         <CheckoutStack.Screen
           name="AddressSelection"
           component={AddressSelectionScreen}
+          options={{ title: "Seleccionar Dirección" }}
         />
-        <Stack.Screen name="AddAddress" component={AddAddressScreen} />
-        <Stack.Screen name="ListAddress" component={ListAddressScreen} />
+        <Stack.Screen
+          name="AddAddress"
+          component={AddAddressScreen}
+          options={{ title: "Agregar Dirección" }}
+        />
+        <Stack.Screen
+          name="ListAddress"
+          component={ListAddressScreen}
+          options={{ title: "Ver Direcciones" }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
