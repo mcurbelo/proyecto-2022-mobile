@@ -30,15 +30,15 @@ const ProductDetailsScreen = ({
   );
 
   const getStockColor = (stock: number) => {
-    if (stock > 15) return "#008000";
-    if (stock < 15 && stock > 5) return "#D7D800";
+    if (stock > 30) return "#008000";
+    if (stock < 30 && stock > 10) return "#D7D800";
 
     return "#FF1116";
   };
 
   const getStockText = (stock: number) => {
-    if (stock > 15) return "Disponible";
-    if (stock < 15 && stock > 5) return "Medio";
+    if (stock > 30) return "Disponible";
+    if (stock < 30 && stock > 10) return "Medio";
 
     return "Ultimas unidades";
   };
